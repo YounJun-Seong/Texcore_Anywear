@@ -1,0 +1,89 @@
+# 운동 유도 규칙 번들 (계획서 6장)
+#
+# - 유도 엔진은 안전 엔진이 허용한 범위 안에서만 고른다. 충돌하면 항상 안전 엔진이 이긴다.
+# - 수치는 계획서 6장 초안. "DRAFT-GAP"은 계획서에 값이 없어 채운 항목(발주사 검토 필요).
+# - 규칙 ID(R01~R17)는 docs/RULES.md의 결정 규칙표와 1:1로 대응하고, 판정 결과의 rules_fired에 남는다.
+
+meta:
+  rule_set: senior-exercise-induction
+  version: 0.1.0-draft
+  status: draft
+  approved_by: []
+
+# 6-1. 사용자 상태 4단계
+states:
+  fear_max_completed: 2          # 완료 0~2회 → 두려움·무관심 (가입 2주가 지나도 2회 이하면 유지. DRAFT-GAP)
+  habit_weeks: 3                 # 주 3회 이상이 3주 연속 → 습관
+  habit_sessions_per_week: 3
+  lapse_gap_days: 3              # 습관 형성 후 3일 이상 공백 → 이탈 위험
+
+# 6-2. 운동 사다리
+ladder:
+  steps_minutes: [3, 5, 8, 10, 15, 20, 30]
+  promote:
+    min_days_at_level: 7
+    min_completed_at_level_7d: 4
+  demote:
+    rpe_at: 14                   # 운동 중 RPE 14 이상이 있었으면 한 단계 내림
+    missed_days: 2               # 2일 연속 미실행 → 한 단계 내림(6-4)
+  restart_missed_days: 14        # 14일 → "새로 시작"(사다리 처음으로, 사용자 선택)
+  weekly_increase_max: 0.10      # 주간 총량은 직전 주의 110%까지
+  weekly_floor_sessions: 4       # DRAFT-GAP: 운동량이 아주 적을 때는 "현재 단계 × 4회"까지 허용(없으면 3→5분 승급이 막힘)
+  daily_cap_minutes: 60
+  mini_session_minutes: 1        # "오늘 1분만 해볼까요?" / 처음 단계의 "더 쉬운 걸로"
+
+# 종류 비율 (주간, 초안)
+mix:
+  default:      {aerobic: 2, strength: 1, balance: 1}
+  fall_concern: {aerobic: 2, strength: 1, balance: 2}   # DRAFT-GAP: "균형 비중을 늘린다"
+  tie_order: [aerobic, strength, balance]
+
+# 운동 목록. intensity: low | moderate, seated: 앉아서, supported: 의자·벽을 잡고
+activities:
+  - {id: chair_march,      kind: aerobic,  intensity: low,      indoor: true,  seated: true,  supported: true,  name: 의자에 앉아 제자리 걷기}
+  - {id: home_walk,        kind: aerobic,  intensity: moderate, indoor: true,  seated: false, supported: false, name: 집 안 걷기}
+  - {id: outdoor_walk,     kind: aerobic,  intensity: moderate, indoor: false, seated: false, supported: false, name: 동네 걷기}
+  - {id: chair_strength,   kind: strength, intensity: low,      indoor: true,  seated: true,  supported: true,  name: 의자에 앉아 힘 기르기}
+  - {id: sit_to_stand,     kind: strength, intensity: moderate, indoor: true,  seated: false, supported: true,  name: 의자에서 일어났다 앉기}
+  - {id: chair_balance,    kind: balance,  intensity: low,      indoor: true,  seated: true,  supported: true,  name: 의자에 앉아 몸 균형 잡기}
+  - {id: supported_balance, kind: balance, intensity: moderate, indoor: true,  seated: false, supported: true,  name: 의자 잡고 서서 균형 잡기}
+  - {id: free_balance,     kind: balance,  intensity: moderate, indoor: true,  seated: false, supported: false, name: 혼자 서서 균형 잡기}
+
+# 6-3. 날씨·환경 → 실내 전환
+weather:
+  below_temp_c: 0        # 영하
+  heat_temp_c: 33        # 폭염
+  pm10_bad: 81           # 에어코리아 "나쁨" 시작값
+  pm25_bad: 36
+  reasons:               # 짧은 설명 문구에 들어가는 말
+    precipitation: 비가 와서
+    cold: 날이 많이 추워서
+    heat: 날이 많이 더워서
+    dust: 미세먼지가 많아서
+
+# 6-3. 알림
+notifications:
+  max_per_day: 2
+  reduced_max_per_day: 1
+  window: {start: "07:00", end: "20:00"}   # 07:00 이전·20:00 이후 금지
+  consecutive_ignored_to_reduce: 2          # 2회 연속 무시 → 하루 1개 + "시간을 바꿀까요?"
+  median_window_sessions: 14                # 최근 실제 시작 시각 중앙값으로 자동 조정
+  median_min_samples: 3
+  round_minutes: 5
+  evening_nudge: {time: "19:00", min_gap_minutes: 60}   # 당일 미실행 저녁 알림(DRAFT-GAP 시각)
+  no_repeat_days: 14                        # 같은 문구 14일 안에 반복 금지
+
+# 6-4. 이탈 방지·재참여 (missed_days = 오늘 빼고 연속으로 안 한 날 수)
+reengagement:
+  tiers:
+    - {from: 2,  code: MISSED_2,  actions: [ask_reason]}
+    - {from: 3,  code: MISSED_3,  actions: [play_guardian_cheer, request_guardian_cheer]}
+    - {from: 5,  code: MISSED_5,  actions: [cause_check, guardian_weekly_summary]}
+    - {from: 14, code: MISSED_14, actions: [restart_offer, guardian_lapse_alert, manager_call]}
+  # 보호자·담당자에게 가는 행동과 필요한 조건(어르신 동의 + 공유 범위)
+  requires:
+    play_guardian_cheer: {has_guardian_cheer: true}
+    request_guardian_cheer: {guardian_mode: full, consent_guardian_cheer_request: true}
+    guardian_weekly_summary: {guardian_mode: full}
+    guardian_lapse_alert: {guardian_mode: full}
+    manager_call: {manager_linked: true, consent_manager: true}

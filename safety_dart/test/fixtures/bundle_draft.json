@@ -1,0 +1,276 @@
+{
+  "version": "0.1.0-draft",
+  "sha256": "8457d3ecff3f045ac0890f2583dc729364ce892367c9cf85c2e3317f6ec56a21",
+  "rules": {
+    "meta": {
+      "rule_set": "senior-exercise-safety",
+      "version": "0.1.0-draft",
+      "status": "draft",
+      "approved_by": [],
+      "source": "외주 계획서 5장(운동 전·중·후 규칙) 초안"
+    },
+    "hard_gate": {
+      "conditions_requiring_clearance": [
+        "unstable_angina",
+        "uncontrolled_arrhythmia",
+        "worsening_heart_failure",
+        "recent_myocardial_infarction",
+        "recent_cardiac_surgery",
+        "recent_stroke",
+        "severe_aortic_stenosis",
+        "syncope_history"
+      ],
+      "parq_risk_requires_clearance": true,
+      "devices_requiring_doctor_hr_ceiling": [
+        "pacemaker",
+        "icd"
+      ]
+    },
+    "plausibility": {
+      "systolic": {
+        "min": 70,
+        "max": 260
+      },
+      "diastolic": {
+        "min": 30,
+        "max": 150
+      },
+      "resting_hr": {
+        "min": 30,
+        "max": 220
+      },
+      "require_systolic_above_diastolic": true
+    },
+    "source_grades": {
+      "blood_pressure": {
+        "manual": "A",
+        "ble_upper_arm": "A",
+        "watch": "C"
+      },
+      "heart_rate": {
+        "manual": "A",
+        "ble_upper_arm": "A",
+        "chest_strap": "A",
+        "watch": "B"
+      }
+    },
+    "precheck": {
+      "bands": {
+        "systolic": [
+          {
+            "lower": null,
+            "upper": 90,
+            "light": "RED",
+            "code": "PRE_SBP_LOW"
+          },
+          {
+            "lower": 90,
+            "upper": 160,
+            "light": "GREEN",
+            "code": "PRE_SBP_OK"
+          },
+          {
+            "lower": 160,
+            "upper": 180,
+            "light": "YELLOW",
+            "code": "PRE_SBP_ELEVATED"
+          },
+          {
+            "lower": 180,
+            "upper": null,
+            "light": "RED",
+            "code": "PRE_SBP_HIGH"
+          }
+        ],
+        "diastolic": [
+          {
+            "lower": null,
+            "upper": 50,
+            "light": "RED",
+            "code": "PRE_DBP_LOW"
+          },
+          {
+            "lower": 50,
+            "upper": 100,
+            "light": "GREEN",
+            "code": "PRE_DBP_OK"
+          },
+          {
+            "lower": 100,
+            "upper": 110,
+            "light": "YELLOW",
+            "code": "PRE_DBP_ELEVATED"
+          },
+          {
+            "lower": 110,
+            "upper": null,
+            "light": "RED",
+            "code": "PRE_DBP_HIGH"
+          }
+        ],
+        "resting_hr": [
+          {
+            "lower": null,
+            "upper": 45,
+            "light": "RED",
+            "code": "PRE_HR_LOW"
+          },
+          {
+            "lower": 45,
+            "upper": 50,
+            "light": "YELLOW",
+            "code": "PRE_HR_BORDER_LOW"
+          },
+          {
+            "lower": 50,
+            "upper": 100,
+            "light": "GREEN",
+            "code": "PRE_HR_OK"
+          },
+          {
+            "lower": 100,
+            "upper": 120,
+            "light": "YELLOW",
+            "code": "PRE_HR_ELEVATED"
+          },
+          {
+            "lower": 120,
+            "upper": null,
+            "light": "RED",
+            "code": "PRE_HR_HIGH"
+          }
+        ]
+      },
+      "emergency_symptoms": [
+        "chest_pain",
+        "fainted",
+        "reduced_consciousness",
+        "one_side_weakness",
+        "slurred_speech"
+      ],
+      "red_symptoms": [
+        "shortness_of_breath",
+        "dizziness",
+        "severe_unusual_fatigue"
+      ],
+      "yellow_symptoms": [
+        "mild_fatigue"
+      ],
+      "red_conditions": [
+        "fever",
+        "acute_illness"
+      ],
+      "yellow_conditions": [
+        "rested_3plus_days",
+        "poor_sleep",
+        "missed_medication"
+      ],
+      "doctor_limit_defaults": {
+        "systolic_max": 180,
+        "diastolic_max": 110,
+        "resting_hr_max": 120
+      }
+    },
+    "allowance": {
+      "GREEN": {
+        "allowed": true,
+        "intensity": "planned",
+        "minutes_factor": 1.0,
+        "min_minutes": 3,
+        "hr_ceiling_pct_cap": null
+      },
+      "YELLOW": {
+        "allowed": true,
+        "intensity": "low",
+        "minutes_factor": 0.5,
+        "min_minutes": 3,
+        "hr_ceiling_pct_cap": 0.64
+      },
+      "RED": {
+        "allowed": false
+      }
+    },
+    "session": {
+      "max_hr": {
+        "intercept": 208,
+        "age_coef": 0.7
+      },
+      "zone_pct": {
+        "lower": 0.64,
+        "upper": 0.76
+      },
+      "ceiling_pct": {
+        "initial": 0.7,
+        "escalated": 0.76,
+        "absolute_max": 0.85
+      },
+      "initial_period_weeks": 4,
+      "over_ceiling_seconds_to_slow_down": 30,
+      "recover_seconds_after_slow_down": 120,
+      "stop_ratio_over_ceiling": 1.1,
+      "sudden_change": {
+        "delta_bpm": 30,
+        "window_seconds": 10
+      },
+      "rpe": {
+        "step_down_at": 14,
+        "stop_at": 16,
+        "valid": {
+          "min": 6,
+          "max": 20
+        },
+        "answer_map": {
+          "comfortable": 11,
+          "slightly_hard": 13,
+          "hard": 15,
+          "very_hard": 17
+        }
+      },
+      "checkin_interval_seconds": 180,
+      "no_sensor_checkin_interval_seconds": 120,
+      "no_response_seconds": 180,
+      "sensor": {
+        "hr_gap_seconds": 15,
+        "plausible": {
+          "min": 30,
+          "max": 220
+        },
+        "fallback_checkin_interval_seconds": 60
+      },
+      "heart_rate_grades": {
+        "A": {
+          "use_hr": true,
+          "max_hr_action": "STOP"
+        },
+        "B": {
+          "use_hr": true,
+          "max_hr_action": "PAUSE"
+        },
+        "C": {
+          "use_hr": false
+        }
+      },
+      "stop_symptoms": [
+        "shortness_of_breath",
+        "dizziness",
+        "cold_sweat",
+        "vision_change"
+      ],
+      "emergency_symptoms": [
+        "chest_pain",
+        "fainted",
+        "reduced_consciousness",
+        "one_side_weakness",
+        "slurred_speech"
+      ]
+    },
+    "post": {
+      "recovery_seconds": 180,
+      "elevated_delta_bpm": 20
+    },
+    "emergency": {
+      "ask_ok_timeout_seconds": 60,
+      "call_119_confirm_timeout_seconds": 30
+    }
+  }
+}

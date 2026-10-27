@@ -1,0 +1,14 @@
+name: safety_engine
+description: 어르신 운동 안전 엔진 단말용 Dart 구현. Python 기준 구현(../safety)과 같은 규칙 번들·정답표를 통과해야 한다.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  crypto: ^3.0.3
+
+dev_dependencies:
+  test: ^1.25.0
+  yaml: ^3.1.2

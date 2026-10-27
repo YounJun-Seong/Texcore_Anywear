@@ -1,0 +1,22 @@
+﻿id,kind,a,b,expected,note
+M001,post_check,70,89,RECOVERED,"안정 70, 3분 휴식 후 89"
+M002,post_check,70,90,SLOW_RECOVERY,"안정 70, 3분 휴식 후 90"
+M003,post_check,70,91,SLOW_RECOVERY,"안정 70, 3분 휴식 후 91"
+M004,post_check,60,79,RECOVERED,"안정 60, 3분 휴식 후 79"
+M005,post_check,60,80,SLOW_RECOVERY,"안정 60, 3분 휴식 후 80"
+M006,post_check,80,95,RECOVERED,"안정 80, 3분 휴식 후 95"
+M007,post_check,80,100,SLOW_RECOVERY,"안정 80, 3분 휴식 후 100"
+M008,post_check,75,75,RECOVERED,"안정 75, 3분 휴식 후 75"
+M009,allowance,GREEN,10,10,GREEN 계획 10분 → 최대 10분
+M010,allowance,GREEN,3,3,GREEN 계획 3분 → 최대 3분
+M011,allowance,GREEN,30,30,GREEN 계획 30분 → 최대 30분
+M012,allowance,YELLOW,10,5,YELLOW 계획 10분 → 최대 5분
+M013,allowance,YELLOW,3,3,YELLOW 계획 3분 → 최대 3분
+M014,allowance,YELLOW,5,3,YELLOW 계획 5분 → 최대 3분
+M015,allowance,YELLOW,8,4,YELLOW 계획 8분 → 최대 4분
+M016,allowance,YELLOW,15,7,YELLOW 계획 15분 → 최대 7분
+M017,allowance,YELLOW,30,15,YELLOW 계획 30분 → 최대 15분
+M018,allowance,RED,10,0,RED 계획 10분 → 최대 0분
+M019,allowance,REMEASURE,10,0,REMEASURE 계획 10분 → 최대 0분
+M020,allowance,BLOCKED,10,0,BLOCKED 계획 10분 → 최대 0분
+M021,allowance,EMERGENCY,10,0,EMERGENCY 계획 10분 → 최대 0분

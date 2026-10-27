@@ -1,0 +1,133 @@
+# 어르신 운동 안전 규칙 번들
+#
+# - 이 파일이 판정 수치의 유일한 출처다. 코드에는 수치를 두지 않는다.
+# - status: draft 인 동안은 계획서 5장 초안 값이다. 의료 자문단(순환기내과·재활의학과)
+#   승인 후 status: approved, approved_by 기록, version 올림 → 그 다음에만 배포한다.
+# - "DRAFT-GAP" 주석은 계획서에 값이 없어 보수적으로 채운 항목이다. 자문단 확정 필요.
+# - 밴드는 [lower, upper) 반열린 구간. null = 끝이 없음. 구간은 빈틈 없이 이어져야 한다(로더가 검사).
+
+meta:
+  rule_set: senior-exercise-safety
+  version: 0.1.0-draft
+  status: draft            # draft | approved
+  approved_by: []          # 예: [{name: "...", role: 순환기내과, date: 2026-11-01}]
+  source: "외주 계획서 5장(운동 전·중·후 규칙) 초안"
+
+# 5-1. 사용 전 제외·의사 확인 (하드 게이트)
+hard_gate:
+  conditions_requiring_clearance:
+    - unstable_angina            # 불안정 협심증
+    - uncontrolled_arrhythmia    # 조절되지 않는 부정맥
+    - worsening_heart_failure    # 악화 중인 심부전
+    - recent_myocardial_infarction  # 최근 심근경색
+    - recent_cardiac_surgery     # 최근 심장 수술
+    - recent_stroke              # 최근 뇌졸중
+    - severe_aortic_stenosis     # 중증 대동맥판 협착
+    - syncope_history            # 실신 병력
+  parq_risk_requires_clearance: true
+  devices_requiring_doctor_hr_ceiling: [pacemaker, icd]
+
+# 5-2. 측정값이 비현실적이면 판정하지 않고 재측정
+plausibility:
+  systolic:   {min: 70, max: 260}
+  diastolic:  {min: 30, max: 150}   # DRAFT-GAP: 계획서는 수축기 예시만 있음
+  resting_hr: {min: 30, max: 220}   # DRAFT-GAP
+  require_systolic_above_diastolic: true
+
+# 측정 출처 신뢰 등급 (7-3). C 등급은 판정에 쓰지 않는다.
+# A: 판정 사용 / B: 나쁜 쪽으로만 반영(좋게 나와도 안전 근거 아님) / C: 판정 사용 금지
+source_grades:
+  blood_pressure:
+    manual: A              # 상완형 혈압계 값을 손으로 입력
+    ble_upper_arm: A       # BLE 상완형 혈압계
+    watch: C               # 디즈먼트 혈압: 참고용 → 상완형 재측정 유도
+  heart_rate:
+    manual: A
+    ble_upper_arm: A       # 상완형 혈압계가 함께 재는 맥박
+    chest_strap: A         # 표준 BLE 심박 센서
+    watch: B               # 디즈먼트 심박
+
+# 5-2. 운동 전 판정 (앉아서 5분 쉰 뒤)
+precheck:
+  bands:
+    systolic:
+      - {lower: null, upper: 90,   light: RED,    code: PRE_SBP_LOW}
+      - {lower: 90,   upper: 160,  light: GREEN,  code: PRE_SBP_OK}
+      - {lower: 160,  upper: 180,  light: YELLOW, code: PRE_SBP_ELEVATED}
+      - {lower: 180,  upper: null, light: RED,    code: PRE_SBP_HIGH}
+    diastolic:
+      - {lower: null, upper: 50,   light: RED,    code: PRE_DBP_LOW}
+      - {lower: 50,   upper: 100,  light: GREEN,  code: PRE_DBP_OK}
+      - {lower: 100,  upper: 110,  light: YELLOW, code: PRE_DBP_ELEVATED}
+      - {lower: 110,  upper: null, light: RED,    code: PRE_DBP_HIGH}
+    resting_hr:
+      - {lower: null, upper: 45,   light: RED,    code: PRE_HR_LOW}
+      - {lower: 45,   upper: 50,   light: YELLOW, code: PRE_HR_BORDER_LOW}  # DRAFT-GAP: 45~49 계획서 미지정
+      - {lower: 50,   upper: 100,  light: GREEN,  code: PRE_HR_OK}
+      - {lower: 100,  upper: 120,  light: YELLOW, code: PRE_HR_ELEVATED}
+      - {lower: 120,  upper: null, light: RED,    code: PRE_HR_HIGH}
+
+  # 급성 위급 증상 → 판정 없이 즉시 119 안내 화면
+  emergency_symptoms: [chest_pain, fainted, reduced_consciousness, one_side_weakness, slurred_speech]
+  red_symptoms: [shortness_of_breath, dizziness, severe_unusual_fatigue]  # severe_unusual_fatigue: DRAFT-GAP
+  yellow_symptoms: [mild_fatigue]
+  red_conditions: [fever, acute_illness]
+  yellow_conditions: [rested_3plus_days, poor_sleep, missed_medication]
+
+  # 의사 개인 한도: 이 값 이상이면 RED. 기본 RED 기준보다 느슨하면 무시(MVP는 완화 금지).
+  doctor_limit_defaults:
+    systolic_max: 180
+    diastolic_max: 110
+    resting_hr_max: 120
+
+# 신호등별 허용 범위 (plan_today의 allowed_set)
+allowance:
+  GREEN:  {allowed: true,  intensity: planned, minutes_factor: 1.0, min_minutes: 3, hr_ceiling_pct_cap: null}
+  YELLOW: {allowed: true,  intensity: low,     minutes_factor: 0.5, min_minutes: 3, hr_ceiling_pct_cap: 0.64}  # DRAFT-GAP: 단축 비율·상한
+  RED:    {allowed: false}
+
+# 5-3. 운동 중 규칙
+session:
+  max_hr: {intercept: 208, age_coef: 0.7}     # Tanaka: 208 - 0.7 × 나이
+  zone_pct: {lower: 0.64, upper: 0.76}
+  ceiling_pct:
+    initial: 0.70            # 시작 4주
+    escalated: 0.76          # 4주 후 + 반응 안정 확인 시
+    absolute_max: 0.85       # 어떤 경우에도 초과 금지
+  initial_period_weeks: 4
+  over_ceiling_seconds_to_slow_down: 30    # 상한 30초 넘게 초과 → 천천히
+  recover_seconds_after_slow_down: 120     # 2분 안에 복귀 못 하면 일시정지
+  stop_ratio_over_ceiling: 1.10            # 상한 +10% 이상 → 중단
+  sudden_change: {delta_bpm: 30, window_seconds: 10}   # DRAFT-GAP: "이유 없는 급변" 정의
+  rpe:
+    step_down_at: 14
+    stop_at: 16
+    valid: {min: 6, max: 20}
+    answer_map:              # 화면·음성 쉬운 답 → RPE (DRAFT-GAP)
+      comfortable: 11        # 편해요, 말 잘 나와요
+      slightly_hard: 13      # 조금 힘들어요
+      hard: 15               # 힘들어요
+      very_hard: 17          # 너무 힘들어요, 말하기 어려워요
+  checkin_interval_seconds: 180            # 3분마다 확인 질문
+  no_sensor_checkin_interval_seconds: 120  # DRAFT-GAP: 심박 장치 없이 폰만으로 하는 날
+  no_response_seconds: 180                 # 3분 무응답 → 보호자 알림 + 큰 소리
+  sensor:
+    hr_gap_seconds: 15                     # DRAFT-GAP: 이 시간 동안 유효 심박 없으면 센서 오류
+    plausible: {min: 30, max: 220}
+    fallback_checkin_interval_seconds: 60  # 센서 오류 시 확인 질문을 늘림
+  heart_rate_grades:
+    A: {use_hr: true, max_hr_action: STOP}
+    B: {use_hr: true, max_hr_action: PAUSE}  # 경고용: 천천히·일시정지까지만
+    C: {use_hr: false}
+  stop_symptoms: [shortness_of_breath, dizziness, cold_sweat, vision_change]
+  emergency_symptoms: [chest_pain, fainted, reduced_consciousness, one_side_weakness, slurred_speech]
+
+# 운동 후
+post:
+  recovery_seconds: 180
+  elevated_delta_bpm: 20      # 3분 휴식 후 안정 시보다 20 이상 높으면 다음 강도 한 단계 낮춤
+
+# 5-4. 응급 흐름 타이머 (DRAFT-GAP: 계획서에 시간 없음)
+emergency:
+  ask_ok_timeout_seconds: 60          # "괜찮으세요?" 무응답 → 보호자 알림
+  call_119_confirm_timeout_seconds: 30  # 119 발신 1탭 확인 무응답 → 보호자 알림(보호자가 119 연결)

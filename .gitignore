@@ -1,0 +1,37 @@
+# ---- 파이썬 ----
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# ---- 개발 데이터·기록 (개인 시험 데이터가 들어 있음) ----
+*.db
+watch_bridge/records/
+safety/*.jsonl
+
+# ---- 빌드 결과물 (소스에서 다시 만들 수 있음) ----
+mobile/build/
+mobile/.dart_tool/
+mobile/android/.gradle/
+mobile/android/local.properties
+safety_dart/.dart_tool/
+safety/build/
+dist_pc/
+demo_video/raw/
+demo/shots/
+*.apk
+*.aab
+*.zip
+*.mp4
+*.webm
+
+# ---- 개인 환경 ----
+.env
+.env.*
+*.jks
+*.keystore
+key.properties
+mobile/.vscode/settings.json
+.DS_Store
+.idea/

@@ -1,0 +1,156 @@
+# 문구 풀 초안 (발주사 검수 필수). 규칙이 의도(intent)를 정하고 여기서 문장을 고른다.
+# - 존댓말, 생활 언어. 영어·외래어·약어, 아이 달래는 말투, 죄책감·건강 위협·치료 효과 표현 금지(guardrails.yaml로 자동 검사).
+# - 자리표시: {minutes} 분, {activity} 운동 이름, {goal} 사용자가 고른 목표, {reason} 날씨 이유
+# - 같은 문구는 14일 안에 다시 쓰지 않는다.
+
+# 오늘의 운동(혈압 입력 직후 = 앵커 순간) — 상태별
+- {id: f01, intent: today_FEAR, text: "자, 오늘은 {minutes}분만 해 볼까요? 의자에 앉아서 하니까 넘어질 걱정은 없어요."}
+- {id: f02, intent: today_FEAR, text: "혈압 재신 것부터 벌써 한 걸음이에요. 이어서 앉은 채로 {minutes}분만 같이 해요."}
+- {id: f03, intent: today_FEAR, text: "오늘 할 일은 딱 하나예요. 의자에 앉아 {minutes}분, 제가 옆에서 말로 안내해 드릴게요."}
+- {id: f04, intent: today_FEAR, text: "힘들면 언제든 '그만'을 누르시면 돼요. {minutes}분만 가볍게 시작해 볼까요?"}
+- {id: f05, intent: today_FEAR, text: "처음은 짧을수록 좋습니다. 앉아서 {minutes}분이면 충분해요."}
+- {id: f06, intent: today_FEAR, text: "무리할 필요 없어요. 오늘은 {activity} {minutes}분이에요."}
+- {id: f07, intent: today_FEAR, text: "편하게 앉으셨나요? 그 자리에서 {minutes}분만 몸을 움직여 봐요."}
+- {id: f08, intent: today_FEAR, text: "숨이 조금 차는 정도면 알맞아요. 오늘은 {minutes}분만 해요."}
+- {id: f09, intent: today_FEAR, text: "중간에 쉬어도 괜찮아요. {activity}, {minutes}분 시작해 볼까요?"}
+- {id: f10, intent: today_FEAR, text: "어제보다 조금만 더 움직이면 됩니다. 앉아서 {minutes}분이요."}
+- {id: f11, intent: today_FEAR, text: "오늘 컨디션에 맞춰 골랐어요. {activity} {minutes}분이에요."}
+- {id: f12, intent: today_FEAR, text: "시작 버튼 한 번이면 나머지는 제가 말씀드릴게요. {minutes}분이에요."}
+
+- {id: s01, intent: today_STARTING, text: "늘 하시던 시간이네요. 오늘은 {activity} {minutes}분이에요."}
+- {id: s02, intent: today_STARTING, text: "혈압 재셨으니 이어서 {minutes}분 해 볼까요?"}
+- {id: s03, intent: today_STARTING, text: "이번 주도 조금씩 이어가고 계세요. 오늘은 {minutes}분이에요."}
+- {id: s04, intent: today_STARTING, text: "오늘 준비된 운동은 {activity}, {minutes}분입니다."}
+- {id: s05, intent: today_STARTING, text: "몸이 기억하기 시작했어요. {minutes}분만 같이 해요."}
+- {id: s06, intent: today_STARTING, text: "지금 하시면 오늘 할 일이 끝나요. {activity} {minutes}분이요."}
+- {id: s07, intent: today_STARTING, text: "같은 시간에 하면 훨씬 쉬워져요. 오늘도 {minutes}분이에요."}
+- {id: s08, intent: today_STARTING, text: "{activity}로 골랐어요. {minutes}분 시작해 볼까요?"}
+- {id: s09, intent: today_STARTING, text: "오늘 몸 상태는 운동하기 괜찮다고 나왔어요. {minutes}분 해요."}
+- {id: s10, intent: today_STARTING, text: "짧게, 꾸준히가 제일입니다. 오늘은 {minutes}분이에요."}
+
+- {id: h01, intent: today_HABIT, text: "벌써 몇 주째 이어오셨어요. 오늘은 {activity} {minutes}분입니다."}
+- {id: h02, intent: today_HABIT, text: "오늘은 조금 다른 걸 준비했어요. {activity} {minutes}분이요."}
+- {id: h03, intent: today_HABIT, text: "이제 운동이 하루 일과가 되셨네요. {minutes}분 시작할까요?"}
+- {id: h04, intent: today_HABIT, text: "몸이 많이 익숙해졌어요. 오늘은 {activity}, {minutes}분이에요."}
+- {id: h05, intent: today_HABIT, text: "혈압 재셨으니 평소처럼 {minutes}분 해요."}
+- {id: h06, intent: today_HABIT, text: "오늘도 늘 하던 대로요. {activity} {minutes}분입니다."}
+- {id: h07, intent: today_HABIT, text: "꾸준함이 쌓이고 있어요. {minutes}분 같이 해요."}
+- {id: h08, intent: today_HABIT, text: "오늘 운동은 {activity}예요. {minutes}분이면 끝나요."}
+- {id: h09, intent: today_HABIT, text: "숨찬 정도를 느끼면서 천천히 하세요. 오늘은 {minutes}분이에요."}
+- {id: h10, intent: today_HABIT, text: "몸 상태 확인 끝났어요. {activity} {minutes}분 시작해요."}
+
+- {id: l01, intent: today_LAPSE_RISK, text: "며칠 쉬셨으니 오늘은 가볍게 {minutes}분만 해요."}
+- {id: l02, intent: today_LAPSE_RISK, text: "다시 시작하는 날은 짧게 하는 게 좋아요. {minutes}분이요."}
+- {id: l03, intent: today_LAPSE_RISK, text: "쉬는 날도 필요하지요. 오늘은 {activity} {minutes}분으로 몸을 깨워 봐요."}
+- {id: l04, intent: today_LAPSE_RISK, text: "오랜만이에요. 앉아서 할 수 있는 걸로 {minutes}분 준비했어요."}
+- {id: l05, intent: today_LAPSE_RISK, text: "몸이 기억하고 있을 거예요. {minutes}분만 해 볼까요?"}
+- {id: l06, intent: today_LAPSE_RISK, text: "오늘 혈압 재신 것만으로도 다시 시작하신 거예요. 이어서 {minutes}분 해요."}
+- {id: l07, intent: today_LAPSE_RISK, text: "천천히 다시 해요. {activity} {minutes}분이면 충분합니다."}
+- {id: l08, intent: today_LAPSE_RISK, text: "오늘은 부담 없이 {minutes}분이에요."}
+
+# 노랑: 저강도·시간 단축
+- {id: y01, intent: today_yellow, text: "오늘은 몸이 조금 조심하라고 해요. 의자에 앉아 {minutes}분만 해 볼까요?"}
+- {id: y02, intent: today_yellow, text: "오늘은 평소보다 짧게 해요. {activity} {minutes}분이에요."}
+- {id: y03, intent: today_yellow, text: "무리하지 않는 날이에요. 가볍게 {minutes}분만요."}
+- {id: y04, intent: today_yellow, text: "오늘은 천천히 하는 날로 정했어요. {activity} {minutes}분입니다."}
+- {id: y05, intent: today_yellow, text: "몸 상태에 맞춰 줄였어요. {minutes}분, 앉아서 편하게 해요."}
+- {id: y06, intent: today_yellow, text: "오늘은 쉬엄쉬엄 {minutes}분이면 충분해요."}
+
+# 날씨 때문에 실내로
+- {id: w01, intent: today_weather, text: "{reason} 오늘은 집 안에서 해요. {activity} {minutes}분이에요."}
+- {id: w02, intent: today_weather, text: "{reason} 밖에 나가지 말고 실내에서 {minutes}분 해요."}
+- {id: w03, intent: today_weather, text: "{reason} 걷기 대신 {activity}로 바꿨어요. {minutes}분입니다."}
+- {id: w04, intent: today_weather, text: "{reason} 오늘은 거실에서 {minutes}분이요."}
+- {id: w05, intent: today_weather, text: "{reason} 실내 운동으로 준비했어요. {activity} {minutes}분이에요."}
+- {id: w06, intent: today_weather, text: "{reason} 집에서 편하게 {minutes}분 해요."}
+
+# 빨강: 오늘은 쉬기 (쉬는 것도 칭찬)
+- {id: r01, intent: rest_red, text: "오늘은 쉬세요. 재 주신 것만으로도 잘하셨어요."}
+- {id: r02, intent: rest_red, text: "오늘은 쉬는 게 운동이에요. 확인해 주셔서 고맙습니다."}
+- {id: r03, intent: rest_red, text: "오늘은 몸을 아끼는 날이에요. 도장은 그대로 찍어 드릴게요."}
+- {id: r04, intent: rest_red, text: "쉬기로 한 것도 안전한 선택이에요. 내일 다시 재 봐요."}
+- {id: r05, intent: rest_red, text: "오늘은 편히 쉬세요. 혈압 재신 것, 잘하셨어요."}
+- {id: r06, intent: rest_red, text: "무리하지 않는 게 오늘 할 일이에요. 푹 쉬세요."}
+- {id: r07, intent: rest_red, text: "오늘은 운동 대신 휴식이에요. 계속 불편하시면 다니시는 병원에 여쭤보세요."}
+- {id: r08, intent: rest_red, text: "확인해 주신 덕분에 안전하게 쉴 수 있어요. 오늘은 여기까지예요."}
+
+- {id: m01, intent: remeasure, text: "숫자가 평소와 많이 달라요. 5분 앉아 쉬신 뒤 팔에 감는 혈압계로 한 번 더 재 주세요."}
+- {id: m02, intent: remeasure, text: "한 번 더 재 볼까요? 편히 앉아 5분 쉬고 나서 재시면 돼요."}
+- {id: m03, intent: remeasure, text: "측정이 잘 안 된 것 같아요. 팔에 감는 혈압계로 다시 재 주세요."}
+
+- {id: d01, intent: doctor_check, text: "운동을 시작하기 전에 다니시는 병원 선생님 확인이 필요해요. 확인서를 받으시면 바로 열어 드릴게요."}
+- {id: d02, intent: doctor_check, text: "안전을 위해 먼저 의사 선생님과 상의해 주세요. 보호자분께도 안내해 드릴까요?"}
+
+- {id: n01, intent: done_for_today, text: "오늘 할 만큼 하셨어요. 내일 또 만나요."}
+- {id: n02, intent: done_for_today, text: "오늘 운동은 충분해요. 이제 편히 쉬세요."}
+- {id: n03, intent: done_for_today, text: "이번 주는 이만큼이면 알맞아요. 남은 날은 가볍게 쉬어 가요."}
+
+# 완료 직후 (보상은 '시작'에 준다: 시간·양과 상관없이 같은 칭찬)
+- {id: c01, intent: complete, text: "해내셨어요! 오늘 도장 하나 찍었습니다."}
+- {id: c02, intent: complete, text: "수고하셨어요. 오늘도 몸을 챙기셨네요."}
+- {id: c03, intent: complete, text: "끝까지 하셨어요. 물 한 잔 드시고 쉬세요."}
+- {id: c04, intent: complete, text: "시작하신 것 자체가 대단한 일이에요. 오늘 도장 받으세요."}
+- {id: c05, intent: complete, text: "오늘 운동 끝! 천천히 숨 고르세요."}
+- {id: c06, intent: complete, text: "잘하셨어요. 이번 주 도장이 하나 늘었어요."}
+- {id: c07, intent: complete, text: "멋지게 마치셨어요. 앉아서 잠깐 쉬어 가세요."}
+- {id: c08, intent: complete, text: "오늘 할 일 끝났습니다. 수고 많으셨어요."}
+- {id: c09, intent: complete, text: "몸이 고마워할 거예요. 오늘 도장 찍었어요."}
+- {id: c10, intent: complete, text: "해 보니 할 만하셨죠? 내일도 이 시간에 뵐게요."}
+
+- {id: g01, intent: complete_goal, text: "{goal}, 한 걸음 더 가까워졌어요."}
+- {id: g02, intent: complete_goal, text: "오늘 운동이 {goal}에 보탬이 될 거예요."}
+- {id: g03, intent: complete_goal, text: "{goal}을 위한 하루가 또 쌓였어요."}
+- {id: g04, intent: complete_goal, text: "이렇게 하루하루 모이면 {goal}도 가까워져요."}
+- {id: g05, intent: complete_goal, text: "{goal}, 오늘도 준비하셨네요."}
+- {id: g06, intent: complete_goal, text: "수고하셨어요. {goal}까지 한 칸 더 왔어요."}
+
+- {id: u01, intent: level_up, text: "몸이 많이 익숙해지셨어요. 다음 운동부터 {minutes}분으로 조금 늘려 볼게요."}
+- {id: u02, intent: level_up, text: "일주일 동안 꾸준히 하셨어요. 이제 {minutes}분으로 해 봐요."}
+- {id: u03, intent: level_up, text: "다음부터는 {minutes}분이에요. 힘드시면 언제든 '더 쉬운 걸로'를 누르세요."}
+- {id: u04, intent: level_up, text: "한 단계 올라가요. {minutes}분, 천천히 하시면 됩니다."}
+
+- {id: v01, intent: level_down, text: "오늘 경험이 다음 운동을 더 안전하게 만들어 줍니다. 다음엔 {minutes}분으로 해요."}
+- {id: v02, intent: level_down, text: "몸 상태에 맞춰 {minutes}분으로 줄였어요. 줄이는 것도 잘하는 방법이에요."}
+- {id: v03, intent: level_down, text: "조금 짧게 다시 맞춰 볼게요. 다음 운동은 {minutes}분이에요."}
+- {id: v04, intent: level_down, text: "천천히 가도 괜찮아요. 당분간 {minutes}분으로 해요."}
+
+# 알림
+- {id: a01, intent: reminder, text: "운동할 시간이에요. 오늘은 {minutes}분이면 돼요."}
+- {id: a02, intent: reminder, text: "잠깐 시간 괜찮으세요? {minutes}분 같이 움직여요."}
+- {id: a03, intent: reminder, text: "늘 하시던 시간이에요. 앱을 열면 바로 시작돼요."}
+- {id: a04, intent: reminder, text: "오늘 운동, {minutes}분 준비해 뒀어요."}
+- {id: a05, intent: reminder, text: "편한 의자에 앉아 앱을 열어 주세요. {minutes}분이에요."}
+- {id: a06, intent: reminder, text: "오늘 몸 상태 한번 볼까요? 짧게 끝나요."}
+- {id: a07, intent: reminder, text: "운동 시간입니다. 오늘도 짧게 해요."}
+- {id: a08, intent: reminder, text: "잠깐이면 돼요. {minutes}분 함께해요."}
+
+- {id: b01, intent: reminder_bp, text: "혈압 재실 시간이에요. 재고 나서 {minutes}분만 같이 해요."}
+- {id: b02, intent: reminder_bp, text: "오늘 혈압 재셨나요? 숫자를 넣어 주시면 오늘 운동을 골라 드릴게요."}
+- {id: b03, intent: reminder_bp, text: "혈압계 옆에 앉으셨으면 시작해요. 재고 나서 {minutes}분이에요."}
+- {id: b04, intent: reminder_bp, text: "혈압 재기부터 시작해요. 그것만으로도 오늘 도장이에요."}
+- {id: b05, intent: reminder_bp, text: "아침 혈압 잴 시간이에요. 이어서 짧게 움직여 봐요."}
+- {id: b06, intent: reminder_bp, text: "혈압 재시고 오늘 몸 상태를 알려 주세요."}
+
+- {id: e01, intent: evening_mini, text: "오늘 1분만 해 볼까요? 앉은 자리에서 할 수 있어요."}
+- {id: e02, intent: evening_mini, text: "자기 전에 1분만 몸을 풀어 봐요."}
+- {id: e03, intent: evening_mini, text: "오늘이 가기 전에 1분이요. 의자에 앉아서 하면 돼요."}
+- {id: e04, intent: evening_mini, text: "바쁘셨지요? 1분이면 충분해요."}
+- {id: e05, intent: evening_mini, text: "1분만 움직이고 오늘 도장 받아 가세요."}
+- {id: e06, intent: evening_mini, text: "오늘은 1분짜리로 준비했어요. 해 보실래요?"}
+
+# 재참여
+- {id: q01, intent: ask_reason, text: "요즘 어떠세요? 힘드셨는지, 바쁘셨는지, 어디 아프셨는지 알려 주시면 맞춰 드릴게요."}
+- {id: q02, intent: ask_reason, text: "며칠 쉬셨네요. 어떤 일이 있으셨는지 하나만 골라 주세요."}
+- {id: q03, intent: ask_reason, text: "운동이 불편하셨다면 알려 주세요. 더 쉽게 바꿔 드릴게요."}
+
+- {id: k01, intent: cause_check, text: "몸이 안 좋으셨나요, 바쁜 일이 있으셨나요, 날씨 때문이었나요? 알려 주시면 계획을 바꿔 볼게요."}
+- {id: k02, intent: cause_check, text: "요즘 운동 시간이 안 맞으셨나요? 시간이나 운동을 바꿀 수 있어요."}
+- {id: k03, intent: cause_check, text: "무엇이 걸리셨는지 들려주세요. 같이 다시 맞춰 봐요."}
+
+- {id: t01, intent: restart_offer, text: "다시 처음부터 가볍게 시작해 볼까요? 아니면 조금 더 쉬셔도 괜찮아요."}
+- {id: t02, intent: restart_offer, text: "새로 시작할 준비가 되시면 알려 주세요. 3분부터 다시 해요."}
+- {id: t03, intent: restart_offer, text: "오랜만이에요. 다시 하기와 더 쉬기 중에 골라 주세요."}
+
+- {id: x01, intent: ask_time_change, text: "알림 시간이 불편하신가요? 편한 시간으로 바꿀 수 있어요."}
+- {id: x02, intent: ask_time_change, text: "요즘 알림이 맞지 않는 것 같아요. 시간을 바꿀까요?"}
+- {id: x03, intent: ask_time_change, text: "알림을 덜 받고 싶으시면 줄여 드릴게요. 시간도 바꿀 수 있어요."}

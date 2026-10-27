@@ -1,0 +1,875 @@
+<title>운동친구 시연</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap">
+<style>
+/* 레이아웃: 위에 소개 + 상황 카드 덱, 아래 [어르신 기기 | 보호자 기기 | 판정 타임라인]. 좁으면 한 줄씩 쌓인다. */
+:root {
+  --canvas: #f2f4f7;      /* 차가운 오프화이트 바탕 */
+  --surface: #ffffff;
+  --sunk: #eef1f4;
+  --ink: #0e1726;         /* 짙은 남색 글자 */
+  --ink-2: #4a5568;
+  --ink-3: #7b8696;
+  --line: #e2e7ee;
+  --care: #0b7a55;        /* 어르신 앱: 짙은 초록 */
+  --care-ink: #ffffff;
+  --care-soft: #e3f4ec;
+  --kin: #4f46e5;         /* 보호자 앱: 인디고 */
+  --kin-ink: #ffffff;
+  --kin-soft: #ecebfd;
+  --green: #12804a; --yellow: #f5b800; --yellow-ink: #241a00; --red: #d92d20; --grey: #5b6675;
+  --warn: #fff5d6; --warn-ink: #4a3600;
+  --device: #0b0f14;
+  --shadow: 0 1px 2px rgba(14,23,38,.06), 0 8px 24px -12px rgba(14,23,38,.18);
+  --font: "Gothic A1", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --num: "Sora", "Gothic A1", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --canvas: #0b1017; --surface: #141b25; --sunk: #1b2430; --ink: #eef2f7; --ink-2: #b4bfcc; --ink-3: #8592a3; --line: #263142;
+  --care: #34c48b; --care-ink: #04140d; --care-soft: #13342a; --kin: #8f8bff; --kin-ink: #0d0b33; --kin-soft: #23224a;
+  --warn: #3d3108; --warn-ink: #ffe9a8; --device: #000000; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.8); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --canvas: #0b1017; --surface: #141b25; --sunk: #1b2430; --ink: #eef2f7; --ink-2: #b4bfcc; --ink-3: #8592a3; --line: #263142;
+  --care: #34c48b; --care-ink: #04140d; --care-soft: #13342a; --kin: #8f8bff; --kin-ink: #0d0b33; --kin-soft: #23224a;
+  --warn: #3d3108; --warn-ink: #ffe9a8; --device: #000000; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.8); color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--canvas); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+  padding-block: 28px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1340px; margin: 0 auto; display: grid; gap: 22px; }
+button { font: inherit; color: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--care); outline-offset: 2px; }
+.num { font-family: var(--num); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+
+/* 소개 */
+.hero { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 32px; }
+.hero h1 { margin: 0; font-size: clamp(30px, 4vw, 42px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; text-wrap: balance; }
+.hero h1 em { font-style: normal; color: var(--care); }
+.hero p { margin: 10px 0 0; color: var(--ink-2); max-width: 62ch; font-size: 16px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; }
+.fact b { color: var(--ink); font-family: var(--num); }
+
+/* 상황 카드 덱 */
+.deck { background: var(--surface); border-radius: 22px; padding: 18px; box-shadow: var(--shadow); display: grid; gap: 14px; }
+.deck-row { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; align-items: start; }
+@media (max-width: 760px) { .deck-row { grid-template-columns: minmax(0, 1fr); } }
+.deck-label { font-size: 13px; font-weight: 700; color: var(--ink-2); padding-top: 12px; }
+.deck-label small { display: block; font-weight: 500; color: var(--ink-3); font-size: 12px; }
+.scns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 1000px) { .scns { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .scns { grid-template-columns: minmax(0, 1fr); } }
+.scn { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 10px 12px; cursor: pointer;
+  display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; align-items: center; transition: border-color .15s, transform .15s, background .15s; }
+.scn:hover { border-color: var(--care); transform: translateY(-1px); }
+.scn.on { border-color: var(--care); background: var(--care-soft); }
+.scn i { width: 10px; height: 10px; border-radius: 50%; grid-row: span 2; align-self: center; }
+.scn b { font-size: 14px; }
+.scn span { font-size: 12px; color: var(--ink-3); grid-column: 2; }
+.dot-g { background: var(--green) } .dot-y { background: var(--yellow) } .dot-r { background: var(--red) } .dot-k { background: var(--kin) } .dot-n { background: var(--ink-3) }
+.settings { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; padding-top: 12px; border-top: 1px solid var(--line); }
+.set { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); font-weight: 600; }
+.seg { display: inline-flex; background: var(--sunk); border-radius: 10px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; padding: 6px 11px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(14,23,38,.15); }
+select { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 8px; border-radius: 10px; border: 0; background: var(--sunk); color: var(--ink); }
+input[type=range] { accent-color: var(--care); width: 120px; }
+input[type=checkbox] { accent-color: var(--care); width: 16px; height: 16px; }
+.livebtn { border: 0; background: var(--kin); color: var(--kin-ink); border-radius: 10px; cursor: pointer; padding: 7px 12px; font-weight: 700; font-size: 13px; display: inline-flex; gap: 6px; align-items: center; }
+.livebtn.on { background: var(--care); color: var(--care-ink); }
+.livestate { font-size: 12px; color: var(--ink-3); font-weight: 600; }
+.livedot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; display: inline-block; }
+.livebtn.on .livedot { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .3 } }
+.resetbtn { border: 0; background: var(--sunk); border-radius: 10px; cursor: pointer; padding: 7px 12px; font-weight: 700; font-size: 13px; }
+.statusrow { display: flex; gap: 10px; align-items: stretch; }
+.status { flex: 1; min-width: 0; font-size: 14px; color: var(--ink-2); background: var(--sunk); border-radius: 12px; padding: 10px 14px; }
+.status b { color: var(--ink); }
+
+/* 본문 세 칸 */
+.stage { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 370px) minmax(0, 1fr); gap: 26px; align-items: start; }
+@media (max-width: 1200px) { .stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .log-col { grid-column: 1 / -1; } }
+@media (max-width: 780px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.col-h { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.col-h .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; flex: none; }
+.col-h h2 { margin: 0; font-size: 15px; line-height: 1.3; }
+.col-h p { margin: 0; font-size: 12px; color: var(--ink-3); }
+.av-care { background: var(--care-soft); color: var(--care); } .av-kin { background: var(--kin-soft); color: var(--kin); } .av-log { background: var(--sunk); color: var(--ink-2); }
+
+/* 기기 */
+.device { background: var(--device); border-radius: 48px; padding: 10px; max-width: 400px; margin: 0 auto; position: relative;
+  box-shadow: 0 0 0 1.5px #2a3240, 0 30px 60px -30px rgba(14,23,38,.55); }
+.device::before { content: ""; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 96px; height: 26px; background: var(--device); border-radius: 20px; z-index: 3; }
+.screen { background: var(--canvas); border-radius: 39px; height: 740px; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+.guardian .screen { height: 640px; }
+.sbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 30px 6px; font-size: 14px; font-weight: 700; font-family: var(--num); }
+.sbar svg { display: block; }
+.nav { display: flex; align-items: center; min-height: 44px; padding: 0 12px; }
+.back { border: 0; background: none; font-size: 17px; font-weight: 700; padding: 8px 10px; min-height: 48px; cursor: pointer; color: var(--care); display: inline-flex; align-items: center; gap: 4px; }
+.body { flex: 1; overflow-y: auto; padding: 4px 20px 16px; display: flex; flex-direction: column; gap: 14px; font-size: 19px; }
+.ltitle { margin: 0 0 2px; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; text-wrap: balance; }
+.foot { padding: 12px 18px 26px; display: grid; gap: 10px; background: linear-gradient(to top, var(--canvas) 70%, transparent); }
+.enter .body > * { animation: rise .35s cubic-bezier(.2,.7,.2,1) both; }
+.enter .body > *:nth-child(2) { animation-delay: .04s } .enter .body > *:nth-child(3) { animation-delay: .08s } .enter .body > *:nth-child(n+4) { animation-delay: .12s }
+@keyframes rise { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+
+.primary, .secondary, .choice { width: 100%; min-height: 62px; border-radius: 18px; font-size: 20px; font-weight: 800; cursor: pointer; padding: 12px 16px; transition: transform .1s, filter .15s; }
+.primary { background: var(--care); color: var(--care-ink); border: 0; box-shadow: 0 8px 18px -10px var(--care); }
+.primary:active, .secondary:active, .choice:active { transform: scale(.985); }
+.primary.danger { background: var(--red); color: #fff; box-shadow: 0 8px 18px -10px var(--red); }
+.secondary { background: var(--surface); border: 0; color: var(--ink); box-shadow: inset 0 0 0 2px var(--line); }
+.choice { background: var(--surface); border: 0; text-align: left; font-weight: 700; box-shadow: var(--shadow); display: flex; align-items: center; gap: 12px; }
+.choice .ck { width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--ink-3); flex: none; display: grid; place-items: center; font-size: 16px; }
+.choice.on { box-shadow: inset 0 0 0 2px var(--care); background: var(--care-soft); }
+.choice.on .ck { background: var(--care); border-color: var(--care); color: var(--care-ink); }
+.textlink { border: 0; background: none; color: var(--care); font-size: 17px; font-weight: 700; padding: 10px 0; min-height: 48px; text-align: left; cursor: pointer; }
+.muted { color: var(--ink-2); } .small { font-size: 15px; } .p0 { margin: 0; }
+
+.card { background: var(--surface); border-radius: 20px; padding: 16px; box-shadow: var(--shadow); }
+.row-card { display: flex; gap: 12px; align-items: center; }
+.today .lbl { font-size: 15px; font-weight: 700; color: var(--ink-2); }
+.today .big { font-family: var(--num); font-size: 76px; font-weight: 700; line-height: 1; letter-spacing: -0.04em; margin: 6px 0 8px; }
+.today .big small { font-size: 30px; font-family: var(--font); font-weight: 800; margin-left: 4px; letter-spacing: 0; }
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+.week div { display: grid; gap: 4px; justify-items: center; font-size: 13px; color: var(--ink-3); font-weight: 600; }
+.week i { width: 30px; height: 30px; border-radius: 50%; background: var(--sunk); display: grid; place-items: center; font-style: normal; color: var(--care-ink); font-size: 15px; }
+.week .on i { background: var(--care); }
+.week .now span { color: var(--ink); }
+.chiprow { display: flex; flex-wrap: wrap; gap: 8px; }
+.pchip { display: inline-flex; align-items: center; gap: 6px; background: var(--sunk); border-radius: 999px; padding: 7px 12px; font-size: 15px; font-weight: 700; }
+.pchip.care { background: var(--care-soft); color: var(--care); }
+.field label { display: block; font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--ink-2); }
+.field .inp { display: flex; align-items: center; gap: 10px; background: var(--surface); border-radius: 18px; padding: 6px 16px; box-shadow: var(--shadow); }
+.field input { width: 100%; min-width: 0; font-family: var(--num); font-size: 40px; font-weight: 700; border: 0; background: transparent; color: var(--ink); padding: 4px 0; letter-spacing: -0.02em; }
+.field input:focus { outline: none; }
+.field .inp:focus-within { box-shadow: 0 0 0 3px var(--care); }
+.field span { font-size: 16px; color: var(--ink-3); white-space: nowrap; font-weight: 600; }
+.err { color: var(--red); font-size: 16px; font-weight: 700; }
+.q { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.3; margin: 0; }
+.sheet { border-radius: 26px; padding: 22px; display: grid; gap: 10px; }
+.sheet .ic { width: 58px; height: 58px; border-radius: 50%; background: rgba(255,255,255,.22); display: grid; place-items: center; }
+.sheet .t { font-size: 27px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.GREEN { background: var(--green); color: #fff; } .YELLOW { background: var(--yellow); color: var(--yellow-ink); }
+.YELLOW .ic { background: rgba(0,0,0,.08); }
+.RED, .EMERGENCY { background: var(--red); color: #fff; } .REMEASURE, .BLOCKED { background: var(--grey); color: #fff; }
+.msg { font-size: 22px; font-weight: 700; line-height: 1.45; margin: 0; letter-spacing: -0.01em; }
+.banner { background: var(--warn); color: var(--warn-ink); border-radius: 16px; padding: 12px 14px; font-weight: 700; font-size: 16px; line-height: 1.45; }
+.ring { position: relative; width: 236px; height: 236px; margin: 4px auto 0; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring .trk { stroke: var(--sunk); } .ring .prg { stroke: var(--care); transition: stroke-dashoffset .3s linear; }
+.ring.paused .prg { stroke: var(--yellow); }
+.ring .c { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.ring .c .num { font-size: 58px; font-weight: 700; line-height: 1; }
+.ring .c span { font-size: 15px; color: var(--ink-2); font-weight: 700; margin-top: 6px; }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; font-size: 15px; }
+.kv b { font-family: var(--num); font-variant-numeric: tabular-nums; }
+.kv .src { font-family: var(--font); }
+.big-num { font-family: var(--num); font-size: 38px; font-weight: 700; letter-spacing: -0.02em; }
+.count { font-family: var(--num); font-size: 34px; font-weight: 700; color: var(--red); }
+
+/* 보호자 앱 */
+.guardian .body { font-size: 15px; gap: 14px; }
+.guardian .ltitle { font-size: 24px; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.tile { background: var(--surface); border-radius: 16px; padding: 12px; box-shadow: var(--shadow); display: grid; gap: 2px; }
+.tile span { font-size: 12px; color: var(--ink-3); font-weight: 700; }
+.tile b { font-size: 20px; font-family: var(--num); letter-spacing: -0.02em; }
+.tile b.ko { font-family: var(--font); font-size: 17px; }
+.sec { font-size: 13px; font-weight: 800; color: var(--ink-2); margin: 2px 0 -4px; }
+.feed { display: grid; gap: 8px; }
+.alert { background: var(--surface); border-radius: 16px; padding: 12px 14px; box-shadow: var(--shadow); display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; animation: arrive .45s cubic-bezier(.2,.7,.2,1); }
+.alert .ai { width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; grid-row: span 3; background: var(--kin-soft); color: var(--kin); }
+.alert.urgent .ai { background: var(--red); color: #fff; }
+.alert .t { font-size: 12px; color: var(--ink-3); font-weight: 700; }
+.alert .x { font-weight: 700; }
+.alert .call { font-size: 12px; font-weight: 800; color: var(--red); }
+.note { font-size: 14px; color: var(--ink-2); background: var(--kin-soft); padding: 12px 14px; border-radius: 14px; line-height: 1.5; }
+.cheers { display: flex; flex-wrap: wrap; gap: 6px; }
+.cheer { border: 0; background: var(--kin); color: var(--kin-ink); border-radius: 999px; padding: 9px 14px; font-size: 14px; font-weight: 700; cursor: pointer; }
+.cheer:hover { filter: brightness(1.08); }
+.empty { color: var(--ink-3); font-size: 14px; background: var(--surface); border-radius: 16px; padding: 14px; text-align: center; }
+@keyframes arrive { from { transform: translateY(-8px) scale(.98); opacity: 0 } to { transform: none; opacity: 1 } }
+
+/* 판정 타임라인 */
+.log { background: var(--surface); border-radius: 22px; padding: 8px 6px; box-shadow: var(--shadow); max-height: 760px; overflow-y: auto; }
+.entry { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; padding: 10px 12px; position: relative; }
+.entry::before { content: ""; position: absolute; left: 22.5px; top: 30px; bottom: -10px; width: 2px; background: var(--line); }
+.entry:last-child::before { display: none; }
+.entry .d { width: 12px; height: 12px; border-radius: 50%; margin: 6px 0 0 5px; background: var(--ink-3); box-shadow: 0 0 0 4px var(--surface); position: relative; z-index: 1; }
+.d.pre { background: var(--care); } .d.session { background: #0ea5e9; } .d.em { background: var(--red); } .d.route { background: var(--kin); }
+.entry .h { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.entry .when { font-family: var(--num); font-size: 12px; color: var(--ink-3); font-weight: 500; }
+.entry .what { font-weight: 700; font-size: 14px; }
+.pill { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 999px; }
+.reasons { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+.codes { font-family: ui-monospace, "SFMono-Regular", Menlo, var(--font); font-size: 11px; color: var(--ink-3); overflow-wrap: anywhere; margin-top: 2px; }
+.why { font-size: 13px; margin-top: 4px; background: var(--sunk); border-radius: 10px; padding: 6px 10px; }
+.log-empty { padding: 28px 18px; color: var(--ink-3); font-size: 14px; text-align: center; }
+.fine { font-size: 12px; color: var(--ink-3); margin: 10px 4px 0; line-height: 1.6; }
+@media (prefers-reduced-motion: reduce) { .enter .body > *, .alert { animation: none } .scn, .ring .prg { transition: none } }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <h1>운동친구 <em>시연</em></h1>
+      <p>만성질환 어르신이 혈압을 재면 안전 규칙이 오늘 운동을 정하고, 보호자에게는 필요한 만큼만 알립니다. 아래 판정은 모두 이 페이지 안의 실제 안전 엔진이 합니다.</p>
+    </div>
+    <div class="facts">
+      <span class="fact">정답표 <b>352</b>건 통과</span>
+      <span class="fact">규칙 <b id="ruleVersion">-</b></span>
+      <span class="fact">서버 없이 동작</span>
+    </div>
+  </header>
+
+  <section class="deck" aria-label="시연 조작">
+    <div class="deck-row">
+      <div class="deck-label">하루 상황<small>누르면 저절로 진행</small></div>
+      <div class="scns">
+        <button class="scn" data-scn="green"><i class="dot-g"></i><b>초록 날</b><span>130/80 → 3분 운동, 딸의 응원</span></button>
+        <button class="scn" data-scn="yellow"><i class="dot-y"></i><b>노랑 날</b><span>수축기 165 → 10분이 5분으로</span></button>
+        <button class="scn" data-scn="red"><i class="dot-r"></i><b>빨강 날</b><span>185/95 → 쉬어도 도장</span></button>
+        <button class="scn" data-scn="hard"><i class="dot-r"></i><b>"너무 힘들어요"</b><span>중단 → 괜찮으세요? → 보호자 전화</span></button>
+        <button class="scn" data-scn="hr"><i class="dot-y"></i><b>심박 상한 넘김</b><span>30초 뒤 천천히, 2분 뒤 일시정지</span></button>
+        <button class="scn" data-scn="chest"><i class="dot-r"></i><b>가슴 통증</b><span>판정 없이 바로 119 안내</span></button>
+      </div>
+    </div>
+    <div class="deck-row">
+      <div class="deck-label">워치 비교<small>같은 심박, 다른 등급</small></div>
+      <div class="scns">
+        <button class="scn" data-scn="strapHigh"><i class="dot-n"></i><b>심박 126 · 가슴 스트랩</b><span>판정용 센서(A) → 바로 중단</span></button>
+        <button class="scn" data-scn="watchHigh"><i class="dot-k"></i><b>심박 126 · 디즈먼트 워치</b><span>경고용(B) → 일시정지까지만</span></button>
+        <button class="scn" data-scn="watchBp"><i class="dot-k"></i><b>워치로 잰 혈압</b><span>참고용(C) → 혈압계로 다시</span></button>
+      </div>
+    </div>
+    <div class="settings">
+      <span class="set">시간 <span class="seg" id="speed"><button data-speed="1">1배</button><button data-speed="10">10배</button><button data-speed="30" class="on">30배</button></span></span>
+      <span class="set">오늘 단계 <select id="level" aria-label="운동 사다리 단계"></select></span>
+      <span class="set">공유 범위 <span class="seg" id="scope"><button data-scope="emergency_only">응급만</button><button data-scope="cheer_only">응원만</button><button data-scope="full" class="on">모두</button></span></span>
+      <span class="set">심박 출처 <span class="seg" id="hrsrc"><button data-src="none" class="on">폰만</button><button data-src="strap">가슴 스트랩</button><button data-src="watch">디즈먼트 워치</button></span></span>
+      <span class="set"><input type="range" id="bpm" min="50" max="160" value="95" aria-label="센서 심박"><b id="bpmVal" class="num" style="color:var(--ink)">95</b>회/분</span>
+      <label class="set"><input type="checkbox" id="voice"> 음성 안내</label>
+      <span class="set"><button class="livebtn" id="liveBtn"><span class="livedot"></span><span id="liveLabel">내 컴퓨터 워치 연결</span></button><span class="livestate" id="liveState">watch_bridge.py 실행 후 누르세요</span></span>
+    </div>
+    <div class="statusrow"><div class="status" id="status">상황 카드를 누르면 화면이 저절로 진행됩니다. 어르신 화면을 직접 눌러 보셔도 됩니다.</div>
+      <button class="resetbtn" data-act="reset">처음부터</button></div>
+  </section>
+
+  <main class="stage">
+    <section>
+      <div class="col-h"><div class="av av-care">영</div><div><h2>김영자 님 · 74세, 고혈압</h2><p>어르신용 앱</p></div></div>
+      <div class="device elder"><div class="screen" id="elder"></div></div>
+    </section>
+    <section>
+      <div class="col-h"><div class="av av-kin">지</div><div><h2>딸 이지은 님</h2><p>보호자용 앱</p></div></div>
+      <div class="device guardian"><div class="screen" id="guardian"></div></div>
+    </section>
+    <section class="log-col">
+      <div class="col-h"><div class="av av-log">≡</div><div><h2>판정 기록</h2><p>입력 → 판정 → 사유 코드</p></div></div>
+      <div class="log" id="log" aria-live="polite"></div>
+      <p class="fine">수치는 계획서 5장 초안이며 의료 자문단 확정 전입니다. 운동 종류·시간 고르기(유도 엔진)는 이 시연에서 간단히 흉내만 냅니다.
+        실제 서비스에서는 서버가 같은 판정을 다시 하고 변경 불가 기록으로 남깁니다.</p>
+    </section>
+  </main>
+</div>
+
+<script>/*__ENGINE__*/</script>
+<script>
+const BUNDLE = /*__BUNDLE__*/;
+// ---------- 안전 엔진(Dart를 JS로 컴파일한 것) ----------
+const Engine = {
+  call(fn, arg) {
+    const r = JSON.parse(window.SafetyEngine[fn](JSON.stringify(arg)));
+    if (!r.ok) throw new Error(fn + ': ' + r.error);
+    return r.result;
+  },
+};
+const loaded = Engine.call('load', { bundle: BUNDLE });
+document.getElementById('ruleVersion').textContent = loaded.version;
+
+const PROFILE = { age: 74, conditions: [], beta_blocker: false, doctor_limits: {} };
+const STEPS = [3, 5, 8, 10, 15, 20, 30];
+const ACT = {
+  chair_march: { name: '의자에 앉아 제자리 걷기', lines: ['발을 번갈아 들어 올려요', '팔도 같이 흔들어요', '숨이 조금 차는 정도면 알맞아요'] },
+  home_walk: { name: '집 안 걷기', lines: ['편한 속도로 걸어요', '말은 할 수 있을 만큼만 해요', '힘들면 바로 앉으세요'] },
+};
+const MSG = {
+  GREEN: m => `자, 오늘은 ${m}분만 해 볼까요? 제가 옆에서 말로 안내해 드릴게요.`,
+  YELLOW: m => `오늘은 몸이 조금 조심하라고 해요. 의자에 앉아 ${m}분만 해 볼까요?`,
+  RED: () => '오늘은 쉬세요. 재 주신 것만으로도 잘하셨어요.',
+  REMEASURE: () => '숫자가 평소와 많이 달라요. 5분 앉아 쉬신 뒤 팔에 감는 혈압계로 한 번 더 재 주세요.',
+  BLOCKED: () => '운동을 시작하기 전에 다니시는 병원 선생님 확인이 필요해요.',
+  EMERGENCY: () => '지금 바로 도움을 받으세요. 119에 전화하실 수 있어요.',
+};
+const LIGHT = {
+  GREEN: ['초록 · 평소대로 해요', 'check'], YELLOW: ['노랑 · 오늘은 가볍게', 'alert'], RED: ['빨강 · 오늘은 쉬어요', 'hand'],
+  REMEASURE: ['다시 재 주세요', 'redo'], BLOCKED: ['의사 선생님 확인이 필요해요', 'plus'], EMERGENCY: ['지금 바로 도움을 받으세요', 'siren'],
+};
+const ICON = {
+  check: '<path d="M8 16.5l5 5 11-11" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>',
+  alert: '<path d="M16 8v10" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" fill="none"/><circle cx="16" cy="23.5" r="2" fill="currentColor"/>',
+  hand: '<path d="M10 17V9.5a2 2 0 014 0V15m0-7a2 2 0 014 0v7m0-5.5a2 2 0 014 0V18c0 5-3 8-7.5 8S8 23 7 20l-1.5-3.5a1.8 1.8 0 013-1.8L10 17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+  redo: '<path d="M23 12a8 8 0 10.5 7M23 6v6h-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
+  plus: '<path d="M16 9v14M9 16h14" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>',
+  siren: '<path d="M9 22v-6a7 7 0 0114 0v6M6 25h20M16 4v2M6 8l1.5 1.5M26 8l-1.5 1.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
+  heart: '<path d="M16 26s-9-5.6-9-12.2A5 5 0 0116 11a5 5 0 019 2.8C25 20.4 16 26 16 26z" fill="currentColor"/>',
+  bell: '<path d="M10 22V15a6 6 0 0112 0v7l2 2H8l2-2zM14 26a2 2 0 004 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+  phone: '<path d="M11 7l3 5-2 2a12 12 0 006 6l2-2 5 3-1.5 4C15 25 7 17 7 8.5L11 7z" fill="currentColor"/>',
+  watch: '<rect x="10" y="9" width="12" height="14" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 9l1-4h6l1 4M12 23l1 4h6l1-4M16 13v3.5l2 1.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+  flame: '<path d="M16 4c1 5 7 7 7 14a7 7 0 01-14 0c0-4 2-6 3-8 .5 2 1.5 3 3 3-1-3 0-6 1-9z" fill="currentColor"/>',
+};
+const svg = (n, s = 32) => `<svg width="${s}" height="${s}" viewBox="0 0 32 32" aria-hidden="true">${ICON[n]}</svg>`;
+const CODE_KO = {
+  PRE_SBP_OK: '수축기 정상', PRE_SBP_ELEVATED: '수축기 160~179', PRE_SBP_HIGH: '수축기 180 이상', PRE_SBP_LOW: '수축기 90 미만',
+  PRE_DBP_OK: '이완기 정상', PRE_DBP_ELEVATED: '이완기 100~109', PRE_DBP_HIGH: '이완기 110 이상', PRE_DBP_LOW: '이완기 50 미만',
+  PRE_HR_OK: '맥박 정상', PRE_HR_ELEVATED: '맥박 100~119', PRE_HR_HIGH: '맥박 120 이상', PRE_HR_LOW: '맥박 45 미만', PRE_HR_BORDER_LOW: '맥박 45~49',
+  PRE_EMERGENCY_SYMPTOM: '급성 위급 증상', PRE_RED_SYMPTOM: '빨강 증상', PRE_YELLOW_SYMPTOM: '가벼운 피로',
+  PRE_BP_SOURCE_NOT_ALLOWED: '워치 혈압은 판정에 쓰지 않음(C 등급)', PRE_HR_SOURCE_LOW_GRADE: '워치 맥박만으로는 안전 판단 안 함(B 등급)',
+  PRE_RED_CONDITION: '열·급성 질환', PRE_YELLOW_CONDITION: '수면 부족·약 누락 등', PRE_IMPLAUSIBLE_VALUE: '측정값이 비현실적', PRE_MISSING_VALUE: '측정값 빠짐',
+  HR_OVER_CEILING: '심박 상한 30초 넘게 초과', HR_NOT_RECOVERED: '2분 안에 복귀 못 함', HR_FAR_OVER_CEILING: '상한 +10% 이상', HR_SUDDEN_CHANGE: '심박 급변',
+  RPE_HARD: '숨찬 정도 힘듦(14+)', RPE_VERY_HARD: '숨찬 정도 매우 힘듦(16+)', STOP_SYMPTOM: '중단 증상', EMERGENCY_SYMPTOM: '119 증상', USER_STOP: '"그만" 버튼',
+  CHECKIN_DUE: '정기 확인 질문', NO_RESPONSE: '3분 무응답', SENSOR_GAP: '심박 끊김', SENSOR_IMPLAUSIBLE: '비현실 심박', SENSOR_OK: '센서 복구',
+  emergency: '응급 알림(모든 공유 범위)', no_response: '무응답 알림(모든 공유 범위)', daily_done: '운동 여부(공유 범위 "모두"만)',
+  EM_USER_OK: '괜찮다고 답함', EM_USER_NOT_OK: '"아니에요"', EM_NO_RESPONSE: '60초 무응답', EM_SEVERE_SYMPTOM: '심한 증상', EM_119_CONFIRMED: '119 발신 확인', EM_119_NO_CONFIRM: '119 확인 무응답',
+};
+const ACTION_KO = { SLOW_DOWN: '천천히', STEP_DOWN: '강도 낮춤', PAUSE: '일시정지', STOP: '중단', EMERGENCY_119: '119 화면', ASK_RPE: '숨찬 정도 질문',
+  GUARDIAN_ALERT: '보호자 알림', LOUD_PROMPT: '큰 소리 안내', SENSOR_FALLBACK: '센서 오류 대처', SENSOR_RESTORED: '센서 복구',
+  REST_GUIDANCE: '휴식 안내', ASK_OK: '"괜찮으세요?"', SHOW_119: '119 화면', DIAL_119: '119 발신', NOTIFY_GUARDIAN: '보호자 전화+알림', GUARDIAN_CALL_119: '보호자에게 119 요청' };
+
+// ---------- 상태 ----------
+let S, G, LOG, speed = 30, tickTimer = null, scriptToken = 0, lastScreen = null;
+const clockBase = new Date(2026, 10, 2, 9, 12);
+function fresh() {
+  S = { screen: 'home', level: 0, streak: 3, weekStamps: 3, stampToday: false, doneToday: false,
+        bp: { s: '', d: '', p: '' }, bpSource: 'manual', err: '', symptoms: [], conditions: [], decision: null, plan: null,
+        session: null, flow: null, emClock: 0, rpeStep: 'ask', complete: null, cheerToPlay: null };
+  G = { scope: G ? G.scope : 'full', alerts: [], cheersQueued: [] };
+  LOG = [];
+}
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const now = () => new Date(clockBase.getTime() + (S.session ? S.session.t : 0) * 1000 + (S.emClock || 0) * 1000);
+const hhmm = d => `${d.getHours() < 12 ? '오전' : '오후'} ${((d.getHours() + 11) % 12) + 1}:${String(d.getMinutes()).padStart(2, '0')}`;
+const clock = d => `${((d.getHours() + 11) % 12) + 1}:${String(d.getMinutes()).padStart(2, '0')}`;
+
+function say(text) {
+  if (!$('#voice').checked || !('speechSynthesis' in window)) return;
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'ko-KR'; u.rate = 0.95; speechSynthesis.speak(u); } catch (e) {}
+}
+function status(html) { $('#status').innerHTML = html; }
+function log(kind, title, outcome, codes, extra) {
+  LOG.unshift({ when: hhmm(now()), kind, title, outcome, codes: codes || [], extra });
+  renderLog();
+}
+
+// ---------- 보호자 알림 (서버 라우팅 규칙과 같음) ----------
+const SCOPE_OK = { emergency: ['emergency_only', 'cheer_only', 'full'], no_response: ['emergency_only', 'cheer_only', 'full'], daily_done: ['full'] };
+function alertGuardian(kind, text, call) {
+  if (!SCOPE_OK[kind].includes(G.scope)) {
+    log('route', `보호자 알림 보내지 않음 (${scopeName()})`, null, [kind]);
+    return;
+  }
+  G.alerts.unshift({ kind, text, call, when: hhmm(now()) });
+  log('route', `보호자에게 ${call ? '전화+알림' : '알림'}: ${text}`, null, [kind]);
+  renderGuardian();
+}
+const SRC = {
+  none: { grade: null, name: '폰만으로', note: '심박 없이 2분마다 숨찬 정도를 물어요' },
+  strap: { grade: 'A', name: '가슴 스트랩', note: '판정에 쓰는 센서(A 등급): 크게 넘으면 바로 중단' },
+  watch: { grade: 'B', name: '디즈먼트 워치', note: '경고용(B 등급): 크게 넘어도 일시정지까지만, 숨찬 정도도 함께 물어요' },
+};
+let hrSrc = 'none';
+// 내 컴퓨터의 watch_bridge.py가 보내는 실시간 워치 심박(B 등급)
+const live = { ws: null, on: false, bpm: null, at: 0, pending: null, battery: null, state: '' };
+function liveNote(text) { $('#liveState').textContent = text; }
+function connectLive() {
+  if (live.ws) { live.ws.close(); return; }
+  let ws;
+  try { ws = new WebSocket('ws://localhost:8765'); } catch (e) { liveNote('이 링크에서는 연결이 막혀 있어요. 받은 HTML 파일로 여세요.'); return; }
+  live.ws = ws;
+  liveNote('연결하는 중…');
+  ws.onopen = () => {
+    live.on = true; $('#liveBtn').classList.add('on'); $('#liveLabel').textContent = '워치 연결 끊기';
+    setSrc('watch'); speed = 1; setSeg('speed', 'speed', 1); if (tickTimer) runTimer();
+    $('#bpm').disabled = true;
+    log('route', '내 컴퓨터의 워치 브리지에 연결 · 실시간 심박을 디즈먼트 워치(B 등급)로 판정', null, [], '실제 심박에 맞춰 시간은 1배로 고정해요.');
+  };
+  ws.onmessage = ev => {
+    let m; try { m = JSON.parse(ev.data); } catch (e) { return; }
+    if (m.type === 'status') {
+      live.state = m.state; if (m.battery != null) live.battery = m.battery;
+      const ko = { connected: '워치 연결됨', connecting: '워치에 연결하는 중', scanning: '워치 찾는 중', not_found: '워치를 못 찾았어요',
+        disconnected: '워치 연결이 끊겼어요', error: '워치 연결 오류', no_heart_rate_service: '이 워치는 표준 심박 서비스가 없어요', starting: '브리지 준비 중' }[m.state] || m.state;
+      liveNote(ko + (m.state === 'connected' && m.detail ? ` · ${m.detail}` : ''));
+      if (['no_heart_rate_service', 'disconnected', 'error'].includes(m.state)) log('route', `워치 브리지: ${ko}`, null, [], m.detail || null);
+    } else if (m.type === 'hr') {
+      live.bpm = m.bpm; live.at = Date.now(); live.pending = m.bpm; if (m.battery != null) live.battery = m.battery;
+      setBpm(m.bpm);
+      liveNote(`실시간 심박 ${m.bpm}회/분 · 디즈먼트 워치`);
+      if (S.screen === 'home' || S.screen === 'session') renderElder();
+    }
+  };
+  ws.onclose = () => {
+    const was = live.on;
+    Object.assign(live, { ws: null, on: false, pending: null });
+    $('#liveBtn').classList.remove('on'); $('#liveLabel').textContent = '내 컴퓨터 워치 연결'; $('#bpm').disabled = false;
+    liveNote(was ? '연결을 끊었어요' : '브리지에 연결하지 못했어요. 터미널에서 python watch_bridge.py serve 를 먼저 실행하세요.');
+    if (was) log('route', '워치 브리지 연결 끊김', null, []);
+  };
+}
+$('#liveBtn').addEventListener('click', connectLive);
+const WATCH_BP = { s: 148, d: 92 };   // 워치가 잰 값(시연용). 판매처 고지 오차 ±10~15mmHg
+const scopeName = () => ({ emergency_only: '응급만', cheer_only: '응원만', full: '모두' })[G.scope];
+
+// ---------- 어르신 흐름 ----------
+function go(screen) { S.screen = screen; renderElder(); }
+
+function submitPrecheck() {
+  const src = S.bpSource;
+  const v = { systolic: num(S.bp.s), diastolic: num(S.bp.d), resting_hr: num(S.bp.p), bp_source: src, hr_source: src };
+  const d = Engine.call('preCheck', { profile: PROFILE, vitals: v, symptoms: S.symptoms, conditions: S.conditions });
+  S.decision = d;
+  const step = STEPS[S.level];
+  let plan = { action: 'REST', minutes: 0 };
+  if (d.outcome === 'GREEN' || d.outcome === 'YELLOW') {
+    const a = Engine.call('allowance', { light: d.outcome, minutes: step });
+    const minutes = a.max_minutes;
+    const easier = Math.max(...[1, ...STEPS.filter(x => x < minutes)]);
+    plan = { action: 'EXERCISE', minutes, intensity: a.intensity, activity: (a.intensity === 'low' || S.level === 0) ? 'chair_march' : 'home_walk', easier };
+  }
+  plan.message = d.reasons.includes('PRE_BP_SOURCE_NOT_ALLOWED')
+    ? '워치 혈압은 오차가 커서 운동 판정에 쓰지 않아요. 팔에 감는 혈압계로 재 주세요.'
+    : MSG[d.outcome](plan.minutes);
+  S.plan = plan;
+  if (['GREEN', 'YELLOW', 'RED', 'REMEASURE'].includes(d.outcome) && src !== 'watch') S.stampToday = true;  // 혈압을 잰 것에 도장(워치 값은 측정으로 치지 않음)
+  const vit = ([v.systolic, v.diastolic].every(x => x != null) ? `${v.systolic}/${v.diastolic}, 맥박 ${v.resting_hr ?? '-'}` : '혈압 입력 없음')
+    + (src === 'watch' ? ' (디즈먼트 워치 측정)' : '');
+  const sym = S.symptoms.length ? ` · 증상 ${S.symptoms.join(', ')}` : '';
+  log('pre', `운동 전 판정 · ${vit}${sym}`, d.outcome, d.reasons,
+      plan.action === 'EXERCISE' ? `허용: 최대 ${plan.minutes}분, ${plan.intensity === 'low' ? '저강도만' : '계획대로'}` : null);
+  if (d.outcome === 'EMERGENCY') alertGuardian('emergency', '급한 증상을 알려 오셨어요. 바로 연락해 보세요.', true);
+  go('result');
+  say(plan.message);
+}
+const num = x => (x === '' || x == null ? null : Number(x));
+
+function startSession(easier) {
+  const light = S.decision.outcome;
+  const lim = Engine.call('hrLimits', { profile: PROFILE, weeks: 0, light });
+  const src = hrSrc, sensor = src !== 'none';
+  const id = Engine.call('monitorNew', { ceiling: lim.ceiling, hr_grade: SRC[src].grade }).id;
+  const minutes = easier ? S.plan.easier : S.plan.minutes;
+  S.session = { id, t: 0, elapsed: 0, total: minutes * 60, minutes, ceiling: lim.ceiling, pct: lim.ceiling_pct, sensor, src,
+                paused: false, banner: null, maxRpe: null, activity: easier ? 'chair_march' : S.plan.activity,
+                live: live.on && src === 'watch' };
+  live.pending = null;
+  log('session', `운동 시작 · ${ACT[S.session.activity].name} ${minutes}분`, null, [],
+      `심박 상한 ${lim.ceiling}회/분 (최대 ${lim.max_hr}의 ${Math.round(lim.ceiling_pct * 100)}%), 심박 출처: ${SRC[src].name} — ${SRC[src].note}`);
+  go('session');
+  say(`${ACT[S.session.activity].name} ${minutes}분 시작할게요. 힘들면 언제든 그만을 누르세요.`);
+  runTimer();
+}
+
+function monitor(event, value) {
+  const s = S.session;
+  const r = Engine.call('monitorEvent', { id: s.id, event, t: s.t, value });
+  handleActions(r.actions);
+}
+function handleActions(actions) {
+  const s = S.session;
+  for (const a of actions) {
+    const hrCode = ['HR_FAR_OVER_CEILING', 'HR_SUDDEN_CHANGE'].includes(a.code);
+    const why = hrCode && a.kind === 'PAUSE' ? '디즈먼트 워치(B 등급) 심박이라 중단하지 않고 일시정지까지만 해요.'
+      : hrCode && a.kind === 'STOP' ? '가슴 스트랩(A 등급) 심박이라 바로 중단해요.' : null;
+    log('session', `운동 중 ${Math.floor(a.t / 60)}분 ${a.t % 60}초 · ${ACTION_KO[a.kind] || a.kind}${a.detail && a.detail.bpm ? ` (심박 ${a.detail.bpm})` : ''}`, null, [a.code], why);
+    switch (a.kind) {
+      case 'ASK_RPE': S.rpeStep = 'ask'; S.screen = 'rpe'; say('숨이 차세요? 말은 하실 수 있나요?'); break;
+      case 'SLOW_DOWN': case 'STEP_DOWN':
+        s.banner = a.code.startsWith('SENSOR') ? '워치 신호가 끊겼어요. 조금 느리게 하시고, 숨찬 정도를 더 자주 여쭤볼게요.' : '천천히 하세요. 조금 더 느리게 움직여요.';
+        say(s.banner); break;
+      case 'SENSOR_RESTORED': s.banner = null; break;
+      case 'PAUSE': s.paused = true; s.pauseWhy = a.code; S.screen = 'session'; say('잠깐 쉬어요. 의자에 앉아 숨을 고르세요.'); break;
+      case 'STOP': endSession(false, false); return;
+      case 'EMERGENCY_119': endSession(false, true); return;
+      case 'GUARDIAN_ALERT': alertGuardian('no_response', '운동 중 3분 동안 응답이 없어요. 확인해 주세요.', true); break;
+      case 'LOUD_PROMPT': say('괜찮으세요? 괜찮으시면 화면을 한 번 눌러 주세요.'); break;
+    }
+  }
+}
+function tick() {
+  if (S.screen === 'emergency' && S.flow) { S.emClock++; flowStep('tick'); return; }
+  const s = S.session;
+  if (!s || s.ended) return stopTimer();
+  s.t++;
+  if (!s.paused) s.elapsed++;
+  // 실시간 워치로 시작한 세션은 끊겨도 슬라이더 값으로 메우지 않는다(없는 데이터를 만들지 않음 → 안전 엔진이 끊김으로 판단)
+  if (s.live) {
+    if (live.pending != null) { const b = live.pending; live.pending = null; monitor('hr', b); } else monitor('tick');
+  } else if (s.sensor) monitor('hr', Number($('#bpm').value));
+  else monitor('tick');
+  if (!S.session || S.session.ended) return;
+  if (!s.paused && s.elapsed % 30 === 0 && s.elapsed < s.total) { const L = ACT[s.activity].lines; say(L[(s.elapsed / 30) % L.length]); }
+  if (s.elapsed >= s.total) return endSession(true);
+  renderElder();
+}
+function runTimer() { stopTimer(); tickTimer = setInterval(tick, 1000 / speed); }
+function stopTimer() { if (tickTimer) clearInterval(tickTimer); tickTimer = null; }
+
+function endSession(completed, severe) {
+  const s = S.session;
+  s.ended = true;
+  if (!completed) {
+    log('session', `운동 멈춤 · ${Math.floor(s.elapsed / 60)}분 ${s.elapsed % 60}초 했음`, null, []);
+    startEmergency(severe);
+    return;
+  }
+  stopTimer();
+  S.doneToday = true; S.stampToday = true;
+  S.streak += 1; S.weekStamps += 1;
+  S.cheerToPlay = G.cheersQueued.shift() || null;
+  S.complete = { message: '해내셨어요! 오늘 도장 하나 찍었습니다.', minutes: s.minutes };
+  log('session', `운동 완료 · ${s.minutes}분`, null, [], s.maxRpe ? `가장 힘들었던 정도: RPE ${s.maxRpe}` : null);
+  alertGuardian('daily_done', '오늘 운동했어요', false);
+  go('complete');
+  say(S.complete.message + (S.cheerToPlay ? ` 딸 이지은 님의 응원이에요. ${S.cheerToPlay}` : ''));
+}
+
+function startEmergency(severe) {
+  S.emClock = 0;
+  const f = Engine.call('flowNew', { t: 0, severe });
+  S.flow = { id: f.id, state: f.state };
+  S.screen = 'emergency';
+  emActions(f.actions);
+  renderElder(); runTimer();
+}
+function flowStep(op, ok) {
+  const r = Engine.call('flowEvent', { id: S.flow.id, op, t: S.emClock, ok });
+  S.flow.state = r.state;
+  emActions(r.actions);
+  if (['RESTING_OK', 'GUARDIAN_ALERTED', 'CALLING_119', 'GUARDIAN_119'].includes(r.state)) stopTimer();
+  renderElder();
+}
+function emActions(actions) {
+  for (const [kind, code] of actions) {
+    log('em', `응급 흐름 ${S.emClock}초 · ${ACTION_KO[kind]}`, null, code ? [code] : []);
+    if (kind === 'ASK_OK') say('운동을 멈췄어요. 그 자리에 앉아서 쉬세요. 괜찮으세요?');
+    if (kind === 'SHOW_119') say('119에 전화하려면 빨간 버튼을 누르세요.');
+    if (kind === 'NOTIFY_GUARDIAN') alertGuardian('emergency', code === 'EM_119_CONFIRMED' ? '어머니가 119에 전화하셨어요.' :
+      code === 'EM_NO_RESPONSE' ? '운동을 멈춘 뒤 1분 동안 응답이 없어요. 바로 전화해 보세요.' : '운동 중 몸이 불편하다고 하셨어요. 연락해 보세요.', true);
+    if (kind === 'GUARDIAN_CALL_119') alertGuardian('emergency', '119 연결이 필요할 수 있어요. 어머니 대신 119에 연락해 주세요.', true);
+    if (kind === 'DIAL_119') status('<b>119 발신</b> · 실제 앱에서는 이때 전화가 걸립니다. 시연에서는 걸지 않습니다.');
+  }
+}
+
+// ---------- 어르신 화면 그리기 ----------
+const SBAR_ICONS = '<svg width="58" height="12" viewBox="0 0 58 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/><rect x="30" y="1" width="22" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="32" y="3" width="15" height="6" rx="1.5"/><rect x="53.5" y="4" width="1.8" height="4" rx=".9"/></g></svg>';
+function shell(title, body, foot, back = true) {
+  return `<div class="sbar"><span>${clock(now())}</span>${SBAR_ICONS}</div>
+    <div class="nav">${back ? '<button class="back" data-e="back" aria-label="뒤로">‹ 뒤로</button>' : ''}</div>
+    <div class="body">${title ? `<h3 class="ltitle">${title}</h3>` : ''}${body}</div>${foot ? `<div class="foot">${foot}</div>` : ''}`;
+}
+const P = (label, act, cls = '') => `<button class="primary ${cls}" data-e="${act}">${label}</button>`;
+const SEC = (label, act) => `<button class="secondary" data-e="${act}">${label}</button>`;
+const CH = (label, act, on, box) => `<button class="choice${on ? ' on' : ''}" data-e="${act}">${box ? `<span class="ck">${on ? '✓' : ''}</span>` : ''}<span>${label}</span></button>`;
+const sheet = (outcome, label, ic) => `<div class="sheet ${outcome}" role="status"><div class="ic">${svg(ic, 34)}</div><div class="t">${label}</div></div>`;
+function weekDots() {
+  const names = ['월', '화', '수', '목', '금', '토', '일'];
+  const on = [S.stampToday, true, true, true, false, false, false];
+  return `<div class="week">${names.map((n, i) => `<div class="${on[i] ? 'on' : ''} ${i === 0 ? 'now' : ''}"><i>${on[i] ? '✓' : ''}</i><span>${i === 0 ? '오늘' : n}</span></div>`).join('')}</div>`;
+}
+const streakChips = () => `<div class="chiprow"><span class="pchip care">${svg('flame', 16)} ${S.streak}일째 이어가는 중</span><span class="pchip">이번 주 도장 ${S.weekStamps}개</span>${S.stampToday ? '<span class="pchip care">✓ 오늘 도장</span>' : ''}</div>`;
+
+const SCREENS = {
+  home() {
+    const cheer = G.cheersQueued.length ? `<div class="card row-card"><span style="color:var(--kin)">${svg('heart', 28)}</span><div><b>가족이 응원을 보냈어요</b><div class="muted small">운동이 끝나면 들려 드릴게요.</div></div></div>` : '';
+    const watch = hrSrc !== 'watch' ? '' : live.on
+      ? `<div class="card row-card"><span style="color:var(--care)">${svg('watch', 28)}</span><div><b>워치 연결됨 · 실시간</b> <span class="muted small">${live.battery != null ? `· 배터리 ${live.battery}%` : ''}</span><div class="muted small">지금 심박 <b class="num">${live.bpm ?? '–'}</b>회/분. 워치 숫자는 참고용이에요.</div></div></div>`
+      : `<div class="card row-card"><span style="color:var(--care)">${svg('watch', 28)}</span><div><b>워치 연결됨</b> <span class="muted small">· 배터리 62%</span><div class="muted small">워치 숫자는 참고용이에요. 판정은 팔에 감는 혈압계로 해요.</div></div></div>`;
+    return shell('', `<div><div class="muted" style="font-size:17px;font-weight:700">좋은 아침이에요</div><h3 class="ltitle">김영자님</h3></div>
+      <div class="card today"><div class="lbl">오늘 할 운동</div><div class="big">${STEPS[S.level]}<small>분</small></div>
+        <div class="muted small">혈압을 재면 오늘 몸 상태에 맞춰 골라 드려요.</div></div>
+      <div class="card" style="display:grid;gap:12px">${weekDots()}${streakChips()}</div>
+      ${watch}${cheer}
+      <button class="textlink" data-e="week">이번 주 기록 보기 ›</button>`,
+      P(S.doneToday ? '한 번 더 점검하기' : '혈압 재고 시작하기', 'start'), false);
+  },
+  bp() {
+    const f = (k, l, u) => `<div class="field"><label for="bp_${k}">${l}</label><div class="inp"><input id="bp_${k}" inputmode="numeric" maxlength="3" value="${esc(S.bp[k])}" data-bp="${k}" placeholder="–"><span>${u}</span></div></div>`;
+    return shell('혈압을 넣어 주세요', `<p class="p0 muted small">의자에 앉아 5분 쉰 뒤, 팔에 감는 혈압계로 재 주세요.</p>
+      ${hrSrc === 'watch' ? `<button class="secondary" data-e="watchBp" style="display:flex;align-items:center;justify-content:center;gap:8px">${svg('watch', 24)} 워치에서 불러오기</button>` : ''}
+      ${S.bpSource === 'watch' ? '<div class="banner">워치로 잰 값이에요. 참고용이라 판정에는 쓰지 않아요.</div>' : ''}
+      ${f('s', '높은 쪽 숫자 (수축기)', 'mmHg')}${f('d', '낮은 쪽 숫자 (이완기)', 'mmHg')}${f('p', '맥박', '회/분')}
+      ${S.err ? `<div class="err">${S.err}</div>` : ''}`, P('다음', 'bpNext'));
+  },
+  q1: () => question('지금 가슴이 아프거나 숨이 많이 차세요?', [['아니요, 괜찮아요', ''], ['숨이 많이 차요', 'shortness_of_breath'], ['가슴이 아프거나 조여요', 'chest_pain']]),
+  q2: () => question('어지럽거나 쓰러질 것 같으세요?', [['아니요', ''], ['네, 어지러워요', 'dizziness']]),
+  q3: () => question('평소와 다르게 피곤하세요?', [['아니요', ''], ['조금 피곤해요', 'mild_fatigue'], ['아주 많이 피곤해요', 'severe_unusual_fatigue']]),
+  cond() {
+    const items = [['fever', '열이 나거나 감기·설사가 있어요'], ['poor_sleep', '어젯밤 잠을 잘 못 잤어요'], ['missed_medication', '오늘 먹을 약을 아직 안 먹었어요'], ['rested_3plus_days', '3일 넘게 운동을 쉬었어요']];
+    return shell('오늘 이런 일이 있으세요?', `<p class="p0 muted small">해당하는 것만 눌러 주세요. 없으면 바로 결과 보기를 누르세요.</p>
+      ${items.map(([k, l]) => CH(l, 'cond:' + k, S.conditions.includes(k), true)).join('')}`, P('결과 보기', 'submit'));
+  },
+  result() {
+    const d = S.decision, p = S.plan, [label, ic] = LIGHT[d.outcome];
+    let foot;
+    if (d.outcome === 'EMERGENCY') foot = P('도움 요청하기', 'help', 'danger');
+    else if (d.outcome === 'REMEASURE') foot = P(S.bpSource === 'watch' ? '팔에 감는 혈압계로 재기' : '다시 재기', 'remeasure');
+    else if (p.action === 'EXERCISE') foot = SEC(`더 쉬운 걸로 (${p.easier}분)`, 'easier') + P(`${p.minutes}분 시작하기`, 'go');
+    else foot = P('확인', 'home');
+    return shell('오늘 몸 상태', `${sheet(d.outcome, label, ic)}
+      <p class="msg">${p.message}</p>
+      ${d.outcome === 'RED' ? '<p class="p0 muted small">재 주신 것만으로도 오늘 도장을 받으셨어요.</p>' : ''}
+      ${S.bpSource === 'watch' ? `<div class="card"><div class="muted small" style="font-weight:700">워치 혈압 · 참고용</div><div class="big-num">${S.bp.s}/${S.bp.d}</div>
+        <div class="muted small">손목 기기는 오차가 ±10~15mmHg라 운동해도 되는지 판단하는 데 쓰지 않아요. 기록에는 참고로 남겨요.</div></div>` : ''}
+      ${p.action === 'EXERCISE' ? `<div class="card" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span class="muted small" style="font-weight:700">오늘 운동</span><b>${ACT[p.activity].name}</b></div>` : ''}`, foot, false);
+  },
+  session() {
+    const s = S.session, left = Math.max(0, s.total - s.elapsed);
+    const mm = Math.floor(left / 60), ss = String(left % 60).padStart(2, '0');
+    const C = 2 * Math.PI * 88, off = C * (1 - s.elapsed / s.total);
+    const hr = s.sensor ? `<div class="card kv"><span class="muted">심박 출처</span><b class="src">${SRC[s.src].name}</b><span class="muted">지금 심박${s.live ? (live.on ? ' (실시간)' : ' (연결 끊김)') : ''}</span><b>${s.live ? (live.on ? (live.bpm ?? '–') : '–') : $('#bpm').value}회/분</b><span class="muted">오늘 상한</span><b>${s.ceiling}회/분</b></div>
+      ${s.src === 'watch' ? '<p class="p0 muted small">워치 심박은 경고용이에요. 낮게 나와도 안심하지 않고 숨찬 정도를 함께 물어요.</p>' : ''}` : '';
+    const pauseWhy = s.paused && s.src === 'watch' && ['HR_FAR_OVER_CEILING', 'HR_SUDDEN_CHANGE'].includes(s.pauseWhy)
+      ? '<div class="banner">워치 심박이 많이 높게 나왔어요. 워치는 참고용이라 멈추지 않고 잠깐 쉬게 해요. 숨이 많이 차면 그만을 누르세요.</div>' : '';
+    return shell(ACT[s.activity].name, `
+      <div class="ring ${s.paused ? 'paused' : ''}"><svg viewBox="0 0 200 200"><circle class="trk" cx="100" cy="100" r="88" fill="none" stroke-width="14"/>
+        <circle class="prg" cx="100" cy="100" r="88" fill="none" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"/></svg>
+        <div class="c"><div class="num" aria-label="남은 시간 ${mm}분 ${ss}초">${mm}:${ss}</div><span>${s.paused ? '잠깐 쉬는 중' : `남은 시간 · 총 ${s.minutes}분`}</span></div></div>
+      ${s.paused ? '<p class="p0" style="text-align:center">의자에 앉아 숨을 고르세요.<br>괜찮아지면 다시 하기를 누르세요.</p>' : ''}
+      ${pauseWhy}
+      ${s.banner && !s.paused ? `<div class="banner">${s.banner}</div>` : ''}
+      ${hr}
+      <p class="p0 muted small">오늘은 ${S.decision.outcome === 'YELLOW' ? '가볍게 하는 날' : '평소대로 하는 날'}이에요. 화면 아무 곳이나 누르면 "괜찮다"는 뜻이에요.</p>`,
+      s.paused ? SEC('그만할래요', 'stop') + P('다시 하기', 'resume') : P('그만', 'stop', 'danger'), false);
+  },
+  rpe() {
+    if (S.rpeStep === 'symptom') return shell('어디가 이상하세요?', [['가슴이 아프거나 조여요', 'chest_pain'], ['한쪽 팔다리에 힘이 빠져요', 'one_side_weakness'], ['말이 어눌해져요', 'slurred_speech'],
+      ['숨이 너무 차요', 'shortness_of_breath'], ['어지러워요', 'dizziness'], ['식은땀이 나요', 'cold_sweat'], ['눈이 침침하거나 이상해요', 'vision_change']]
+      .map(([l, k]) => CH(l, 'sym:' + k)).join(''), null, false);
+    return shell('숨이 차세요?', `<p class="p0 muted">말은 하실 수 있나요? 가장 가까운 것을 눌러 주세요.</p>
+      ${[['편해요, 말도 잘 나와요', 'comfortable'], ['조금 힘들어요', 'slightly_hard'], ['힘들어요, 말하기 어려워요', 'hard'], ['너무 힘들어요', 'very_hard']].map(([l, k]) => CH(l, 'rpe:' + k)).join('')}`,
+      SEC('몸이 이상해요', 'rpeSym'), false);
+  },
+  emergency() {
+    const st = S.flow.state;
+    if (st === 'ASK_OK') return shell('괜찮으세요?', `<p class="msg">운동을 멈췄어요. 그 자리에 앉아서 쉬세요.</p>
+      ${60 - S.emClock > 0 ? `<div class="card row-card"><span class="count">${60 - S.emClock}</span><span class="muted small">초 안에 답이 없으면 보호자에게 전화해요.</span></div>` : ''}
+      <button class="textlink" data-e="severe">가슴이 아프거나 말이 어눌해요 ›</button>`, SEC('아니에요', 'notok') + P('괜찮아요', 'ok'), false);
+    if (st === 'SHOW_119') return shell('119에 전화하세요', `${sheet('EMERGENCY', '지금 바로 도움을 받으세요', 'siren')}
+      <p class="msg">누르면 바로 119로 전화가 걸려요. 보호자에게도 알려요.</p>
+      <p class="p0 muted small">${Math.max(0, 30 - S.emClock)}초 안에 누르지 못하시면 보호자에게 119 연결을 부탁해요.</p>`, P('119 전화하기', 'call119', 'danger'), false);
+    const text = { RESTING_OK: '오늘은 여기까지 해요. 쉬는 것도 잘하신 거예요.', GUARDIAN_ALERTED: '보호자에게 알렸어요. 앉아서 기다리세요.',
+      CALLING_119: '119에 전화하고 있어요. 보호자에게도 알렸어요.', GUARDIAN_119: '보호자에게 119 연결을 부탁했어요. 문을 열어 두고 앉아서 기다리세요.' }[st];
+    return shell(st === 'RESTING_OK' ? '천천히 쉬세요' : '도움을 부르고 있어요', `<div class="card row-card">
+      <span style="color:${st === 'RESTING_OK' ? 'var(--care)' : 'var(--red)'}">${svg(st === 'RESTING_OK' ? 'heart' : 'phone', 34)}</span><p class="msg">${text}</p></div>`, P('처음 화면으로', 'home'), false);
+  },
+  complete() {
+    const c = S.complete;
+    return shell('', `${sheet('GREEN', '해내셨어요', 'check')}
+      <p class="msg">${c.minutes}분 운동을 마치셨어요. 오늘 도장 하나 찍었어요.</p>
+      <div class="card" style="display:grid;gap:12px">${weekDots()}${streakChips()}</div>
+      ${S.cheerToPlay ? `<div class="card row-card" style="align-items:flex-start"><span style="color:var(--kin)">${svg('heart', 28)}</span><div><div class="muted small" style="font-weight:700">딸 이지은 님의 응원</div><div style="font-size:20px;font-weight:700">${esc(S.cheerToPlay)}</div></div></div>` : ''}
+      <p class="p0 muted small">도장은 운동량이 아니라 시작한 것에 드려요. 많이 할수록 더 주지 않아요.</p>`, P('확인', 'home'), false);
+  },
+  week() {
+    const names = ['월', '화', '수', '목', '금', '토', '일'];
+    return shell('이번 주 기록', `<div class="card" style="display:grid;gap:12px">${weekDots()}${streakChips()}</div>
+      <div class="card" style="display:grid;padding:6px 16px">${names.map((n, i) => `<div style="display:flex;justify-content:space-between;padding:12px 0;${i < 6 ? 'border-bottom:1px solid var(--line)' : ''}"><span>${n}요일</span><b style="color:${(i === 0 ? S.stampToday : i < 4) ? 'var(--care)' : 'var(--ink-3)'}">${i === 0 ? (S.stampToday ? '✓ 오늘 도장' : '오늘') : i < 4 ? '✓ 도장' : '–'}</b></div>`).join('')}</div>
+      <p class="p0 muted small">운동을 시작하거나, 혈압을 재거나, 쉬라는 날 쉬면 도장을 받아요.</p>`, null, true);
+  },
+};
+function question(q, answers) {
+  return shell('', `<div class="muted small" style="font-weight:700">몸 상태 확인</div><p class="q">${q}</p>
+    ${answers.map(([l, v]) => CH(l, 'ans:' + v)).join('')}
+    <button class="textlink" data-e="ans:one_side_weakness">한쪽 팔다리에 힘이 빠지거나 말이 어눌해요 ›</button>`);
+}
+const FLOW = ['home', 'bp', 'q1', 'q2', 'q3', 'cond'];
+function renderElder() {
+  const el = $('#elder');
+  const key = S.screen + (S.screen === 'rpe' ? S.rpeStep : '') + (S.screen === 'emergency' && S.flow ? S.flow.state : '');
+  el.innerHTML = SCREENS[S.screen]();
+  // 화면이 바뀔 때만 등장 효과(운동 중 매초 다시 그릴 때는 효과 없음)
+  el.classList.toggle('enter', key !== lastScreen);
+  lastScreen = key;
+}
+
+// ---------- 보호자 화면 ----------
+function renderGuardian() {
+  const full = G.scope === 'full', canCheer = G.scope !== 'emergency_only';
+  const summary = full ? `<div class="tiles"><div class="tile"><span>오늘 운동</span><b class="ko" style="color:${S.doneToday ? 'var(--care)' : 'var(--ink-2)'}">${S.doneToday ? '했어요 ✓' : '아직'}</b></div>
+      <div class="tile"><span>연속</span><b>${S.streak}일</b></div><div class="tile"><span>이번 주 도장</span><b>${S.weekStamps}개</b></div></div>`
+    : `<div class="note">${G.scope === 'cheer_only' ? '어머니가 <b>응원만 받기</b>를 고르셔서 운동했는지는 보이지 않아요. 위급할 때 알림은 와요.' : '어머니가 <b>위급할 때만</b>을 고르셨어요. 그 밖의 정보는 보이지 않아요.'}</div>`;
+  const alerts = G.alerts.length ? G.alerts.map(a => `<div class="alert ${a.kind === 'daily_done' ? '' : 'urgent'}">
+      <span class="ai">${svg(a.kind === 'daily_done' ? 'check' : a.call ? 'phone' : 'bell', 18)}</span>
+      <span class="t">${a.when} · ${a.kind === 'daily_done' ? '알림' : '긴급'}</span><span class="x">${esc(a.text)}</span>${a.call ? '<span class="call">전화 연결 중… (앱 알림도 함께)</span>' : '<span></span>'}</div>`).join('')
+    : '<div class="empty">아직 알림이 없어요.</div>';
+  const presets = ['엄마 오늘도 응원해요', '천천히, 무리하지 마세요', '주말에 같이 걸어요'];
+  const cheer = canCheer ? `<div class="sec">응원 보내기</div><div class="cheers">
+      ${presets.map(p => `<button class="cheer" data-g="cheer:${esc(p)}">${p}</button>`).join('')}</div>
+      ${G.cheersQueued.length ? `<p class="p0 small muted">보낸 응원 ${G.cheersQueued.length}개는 어머니가 운동을 마치면 들려 드려요.</p>` : ''}` : '';
+  $('#guardian').innerHTML = `<div class="sbar"><span>${clock(now())}</span>${SBAR_ICONS}</div><div class="nav"></div>
+    <div class="body"><div><div class="muted small" style="font-weight:700">우리 어머니</div><h3 class="ltitle">김영자 님</h3></div>
+    ${summary}<div class="sec">알림</div><div class="feed">${alerts}</div>${cheer}</div>`;
+}
+
+// ---------- 판정 기록 ----------
+function renderLog() {
+  const el = $('#log');
+  if (!LOG.length) { el.innerHTML = '<div class="log-empty">어르신이 혈압을 넣으면 안전 엔진의 판정이 여기에 차례로 쌓입니다.</div>'; return; }
+  el.innerHTML = LOG.map(e => `<div class="entry"><span class="d ${e.kind}"></span><div><div class="h"><span class="when">${e.when}</span>
+      ${e.outcome ? `<span class="pill ${e.outcome}">${LIGHT[e.outcome][0]}</span>` : ''}
+      <span class="what">${esc(e.title)}</span></div>
+      ${e.codes.length ? `<div class="reasons">${e.codes.map(c => CODE_KO[c] || c).join(' · ')}</div><div class="codes">${e.codes.join(' ')}</div>` : ''}
+      ${e.extra ? `<div class="why">${esc(e.extra)}</div>` : ''}</div></div>`).join('');
+}
+
+// ---------- 입력 처리 ----------
+$('#elder').addEventListener('input', e => { const k = e.target.dataset.bp; if (k) { S.bp[k] = e.target.value.replace(/\D/g, '').slice(0, 3); S.bpSource = 'manual'; } });
+$('#elder').addEventListener('click', e => {
+  const b = e.target.closest('[data-e]');
+  if (!b) { if (S.screen === 'session' && S.session && !S.session.ended) monitor('interaction'); return; }
+  elderAction(b.dataset.e);
+});
+function elderAction(a) {
+  const [act, arg] = a.split(':');
+  switch (act) {
+    case 'start': S.bp = { s: '', d: '', p: '' }; S.bpSource = 'manual'; S.symptoms = []; S.conditions = []; S.err = ''; return go('bp');
+    case 'watchBp': S.bp = { s: String(WATCH_BP.s), d: String(WATCH_BP.d), p: $('#bpm').value }; S.bpSource = 'watch'; S.err = ''; return renderElder();
+    case 'back': { const i = FLOW.indexOf(S.screen); return go(i > 0 ? FLOW[i - 1] : 'home'); }
+    case 'week': return go('week');
+    case 'home': stopTimer(); S.session = null; S.flow = null; S.emClock = 0; return go('home');
+    case 'bpNext':
+      if (!S.bp.s || !S.bp.d || !S.bp.p) { S.err = '세 숫자를 모두 넣어 주세요.'; return renderElder(); }
+      S.err = ''; return go('q1');
+    case 'ans':
+      if (arg) S.symptoms.push(arg);
+      if (arg === 'chest_pain' || arg === 'one_side_weakness') return submitPrecheck();
+      return go({ q1: 'q2', q2: 'q3', q3: 'cond' }[S.screen]);
+    case 'cond': S.conditions = S.conditions.includes(arg) ? S.conditions.filter(x => x !== arg) : [...S.conditions, arg]; return renderElder();
+    case 'submit': return submitPrecheck();
+    case 'remeasure': return elderAction('start');
+    case 'go': return startSession(false);
+    case 'easier': return startSession(true);
+    case 'help': return startEmergency(true);
+    case 'stop': return monitor('user_stop');
+    case 'resume': S.session.paused = false; S.session.banner = null; monitor('resume'); return renderElder();
+    case 'rpe': {
+      const map = { comfortable: 11, slightly_hard: 13, hard: 15, very_hard: 17 };
+      S.session.maxRpe = Math.max(S.session.maxRpe || 0, map[arg]);
+      S.screen = 'session'; monitor('rpe', arg); if (!S.session.ended) renderElder(); return;
+    }
+    case 'rpeSym': S.rpeStep = 'symptom'; return renderElder();
+    case 'sym': S.screen = 'session'; return monitor('symptom', arg);
+    case 'ok': return flowStep('answer', true);
+    case 'notok': return flowStep('answer', false);
+    case 'severe': return flowStep('report_severe');
+    case 'call119': return flowStep('confirm_119');
+  }
+}
+$('#guardian').addEventListener('click', e => {
+  const b = e.target.closest('[data-g]'); if (!b) return;
+  const text = b.dataset.g.slice(6);
+  G.cheersQueued.push(text);
+  log('route', `보호자 응원 도착: "${text}"`, null, []);
+  renderGuardian(); if (S.screen === 'home') renderElder();
+});
+
+// ---------- 시연 조작 ----------
+function setSeg(id, attr, val) { document.querySelectorAll(`#${id} button`).forEach(b => b.classList.toggle('on', b.dataset[attr] === String(val))); }
+$('#speed').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (live.on) { liveNote('실시간 워치 연결 중에는 1배로만 돌아가요'); return; } speed = Number(b.dataset.speed); setSeg('speed', 'speed', speed); if (tickTimer) runTimer(); });
+function setSrc(src) { hrSrc = src; setSeg('hrsrc', 'src', src); if (S.screen === 'home' || S.screen === 'bp') renderElder(); }
+$('#hrsrc').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setSrc(b.dataset.src); });
+$('#scope').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; G.scope = b.dataset.scope; setSeg('scope', 'scope', G.scope); log('route', `어르신이 공유 범위를 "${scopeName()}"으로 바꿈`, null, []); renderGuardian(); });
+const lv = $('#level'); lv.innerHTML = STEPS.map((m, i) => `<option value="${i}">${m}분</option>`).join('');
+lv.addEventListener('change', () => { S.level = Number(lv.value); if (S.screen === 'home') renderElder(); });
+$('#bpm').addEventListener('input', e => { $('#bpmVal').textContent = e.target.value; });
+document.querySelector('[data-act="reset"]').addEventListener('click', () => { document.querySelectorAll('.scn').forEach(x => x.classList.remove('on')); reset(); });
+function reset() { scriptToken++; stopTimer(); try { speechSynthesis.cancel(); } catch (e) {} fresh(); lv.value = '0'; S.level = 0; lastScreen = null; render(); status('처음 상태입니다. 상황 카드를 누르거나 어르신 화면을 직접 눌러 보세요.'); }
+function render() { renderElder(); renderGuardian(); renderLog(); }
+
+// 상황 재생: 사람이 누르듯 한 단계씩 진행
+const wait = ms => new Promise(r => setTimeout(r, ms));
+async function script(token, steps) {
+  for (const st of steps) {
+    if (token !== scriptToken) return;
+    if (typeof st === 'number') { await wait(st); continue; }
+    if (typeof st === 'function') { const r = st(); if (r instanceof Promise) await r; continue; }
+  }
+}
+const until = (cond, token) => new Promise(r => { const iv = setInterval(() => { if (token !== scriptToken || cond()) { clearInterval(iv); r(); } }, 50); });
+function typeBp(s, d, p) { S.bp = { s: String(s), d: String(d), p: String(p) }; S.bpSource = 'manual'; renderElder(); }
+function setBpm(v) { $('#bpm').value = v; $('#bpmVal').textContent = String(v); }
+const PACE = 650;
+function precheckSteps(bp, answers, conds = []) {
+  return [() => elderAction('start'), PACE, () => typeBp(...bp), PACE, () => elderAction('bpNext'), PACE,
+    ...answers.flatMap(a => [() => elderAction('ans:' + a), PACE]),
+    ...(answers.length === 3 ? [...conds.map(c => () => elderAction('cond:' + c)), PACE, () => elderAction('submit'), PACE * 1.6] : [PACE * 1.6])];
+}
+const SCN = {
+  green(t) {
+    status('<b>초록 날</b> · 130/80, 맥박 70 → 계획대로 3분. 2분에 숨찬 정도를 묻고, 끝나면 딸의 응원이 나옵니다.');
+    G.cheersQueued.push('엄마 오늘도 응원해요'); renderGuardian(); log('route', '보호자 응원 도착: "엄마 오늘도 응원해요"', null, []);
+    return [PACE, ...precheckSteps([130, 80, 70], ['', '', '']), () => elderAction('go'),
+      () => until(() => S.screen === 'rpe', t), PACE * 1.5, () => elderAction('rpe:comfortable'),
+      () => until(() => S.screen === 'complete', t)];
+  },
+  yellow(t) {
+    S.level = 3; lv.value = '3'; renderElder();
+    status('<b>노랑 날</b> · 오늘 단계는 10분이지만 수축기 165 → 안전 엔진이 5분·저강도로 줄입니다.');
+    return [PACE, ...precheckSteps([165, 85, 72], ['', '', 'mild_fatigue']), () => elderAction('go'), () => until(() => S.screen === 'rpe', t), PACE, () => elderAction('rpe:slightly_hard')];
+  },
+  red() {
+    status('<b>빨강 날</b> · 185/95 → 오늘은 쉬어요. 혈압을 잰 것만으로 도장을 받습니다.');
+    return [PACE, ...precheckSteps([185, 95, 78], ['', '', ''])];
+  },
+  hard(t) {
+    status('<b>운동 중 "너무 힘들어요"</b> → 단말 엔진이 바로 중단 → "괜찮으세요?" → "아니에요" → 보호자에게 전화.');
+    return [PACE, ...precheckSteps([132, 82, 74], ['', '', '']), () => elderAction('go'),
+      () => until(() => S.screen === 'rpe', t), PACE * 1.5, () => elderAction('rpe:very_hard'), PACE * 2.5, () => elderAction('notok')];
+  },
+  hr(t) {
+    setSrc('strap'); setBpm(116); S.level = 1; lv.value = '1';
+    status('<b>심박 상한 넘김</b> · 센서 심박 116 > 오늘 상한 109 → 30초 넘게 이어지면 "천천히", 2분 안에 안 내려오면 일시정지.');
+    return [PACE, ...precheckSteps([128, 78, 72], ['', '', '']), () => elderAction('go'),
+      () => until(() => S.session && S.session.paused, t), PACE * 3, () => setBpm(92), () => elderAction('resume')];
+  },
+  strapHigh(t) {
+    setSrc('strap'); setBpm(95); S.level = 1; lv.value = '1';
+    status('<b>가슴 스트랩(A 등급)</b> · 심박이 95에서 126으로 → 오늘 상한 109의 +10%(120) 이상 → <b>바로 중단</b> → "괜찮으세요?"');
+    return [PACE, ...precheckSteps([128, 78, 72], ['', '', '']), () => elderAction('go'),
+      () => until(() => S.session && S.session.elapsed >= 15, t), () => setBpm(126), () => until(() => S.screen === 'emergency', t)];
+  },
+  watchHigh(t) {
+    setSrc('watch'); setBpm(95); S.level = 1; lv.value = '1';
+    status('<b>디즈먼트 워치(B 등급)</b> · 같은 심박 126이어도 → 워치 값만으로는 멈추지 않고 <b>일시정지까지만</b>. 판정 기록에서 가슴 스트랩과 비교해 보세요.');
+    return [PACE, ...precheckSteps([128, 78, 72], ['', '', '']), () => elderAction('go'),
+      () => until(() => S.session && S.session.elapsed >= 15, t), () => setBpm(126), () => until(() => S.session && S.session.paused, t)];
+  },
+  watchBp(t) {
+    setSrc('watch'); setBpm(76);
+    status('<b>워치로 잰 혈압</b> · 148/92가 나와도 참고용(C 등급)이라 판정하지 않고, 팔에 감는 혈압계로 다시 재도록 안내 → 다시 재면 초록.');
+    return [PACE, () => elderAction('start'), PACE, () => elderAction('watchBp'), PACE * 1.5, () => elderAction('bpNext'), PACE,
+      () => elderAction('ans:'), PACE, () => elderAction('ans:'), PACE, () => elderAction('ans:'), PACE, () => elderAction('submit'), PACE * 3,
+      () => elderAction('remeasure'), PACE, () => typeBp(132, 82, 74), PACE, () => elderAction('bpNext'), PACE,
+      () => elderAction('ans:'), PACE, () => elderAction('ans:'), PACE, () => elderAction('ans:'), PACE, () => elderAction('submit')];
+  },
+  chest() {
+    status('<b>가슴 통증</b> → 판정을 기다리지 않고 119 안내. 공유 범위와 관계없이 보호자에게 전화가 갑니다.');
+    return [PACE, ...precheckSteps([142, 88, 96], ['chest_pain']), () => elderAction('help')];
+  },
+};
+document.querySelectorAll('[data-scn]').forEach(b => b.addEventListener('click', () => {
+  const name = b.dataset.scn;
+  const keepScope = G.scope;
+  reset(); G.scope = keepScope; setSeg('scope', 'scope', keepScope); if (!live.on) { setSrc('none'); setBpm(95); }
+  document.querySelectorAll('.scn').forEach(x => x.classList.toggle('on', x === b));
+  const token = scriptToken;
+  render();
+  script(token, SCN[name](token));
+}));
+
+fresh(); render();
+</script>

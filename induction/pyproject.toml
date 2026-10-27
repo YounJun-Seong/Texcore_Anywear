@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "induction-engine"
+version = "0.1.0"
+description = "어르신 운동 유도 엔진(규칙 기반 JITAI)"
+requires-python = ">=3.10"
+dependencies = ["pyyaml>=6.0", "safety-engine"]
+
+[tool.setuptools]
+packages = ["induction_engine"]

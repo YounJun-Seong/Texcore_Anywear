@@ -1,0 +1,113 @@
+# 응급 흐름(5-4) 시나리오 정답표. 시간 단위는 초.
+# start: {t, severe}  → start_expected: 시작 시 행동
+# steps: [t, op, arg] op = answer(true/false) | report_severe | confirm_119 | tick
+#        expected: 그 단계에서 나온 [행동, 사유 코드] 목록
+# 기준값(초안): "괜찮으세요?" 60초 무응답 → 보호자, 119 발신 확인 30초 무응답 → 보호자에게 119 요청
+
+- id: E001
+  desc: 괜찮아요 → 휴식 안내로 끝
+  start: {t: 0, severe: false}
+  start_expected: [[REST_GUIDANCE, null], [ASK_OK, null]]
+  steps:
+    - [10, answer, true, [[REST_GUIDANCE, EM_USER_OK]]]
+    - [70, tick, null, []]
+  final: RESTING_OK
+
+- id: E002
+  desc: 아니에요 → 보호자 즉시 알림
+  start: {t: 0, severe: false}
+  start_expected: [[REST_GUIDANCE, null], [ASK_OK, null]]
+  steps:
+    - [10, answer, false, [[NOTIFY_GUARDIAN, EM_USER_NOT_OK]]]
+  final: GUARDIAN_ALERTED
+
+- id: E003
+  desc: 무응답 59초까지는 대기, 60초에 보호자 알림
+  start: {t: 0, severe: false}
+  start_expected: [[REST_GUIDANCE, null], [ASK_OK, null]]
+  steps:
+    - [59, tick, null, []]
+    - [60, tick, null, [[NOTIFY_GUARDIAN, EM_NO_RESPONSE]]]
+  final: GUARDIAN_ALERTED
+
+- id: E004
+  desc: 심한 증상 → 119 화면, 1탭 확인 → 발신 + 보호자 알림
+  start: {t: 0, severe: true}
+  start_expected: [[SHOW_119, EM_SEVERE_SYMPTOM]]
+  steps:
+    - [5, confirm_119, null, [[DIAL_119, EM_119_CONFIRMED], [NOTIFY_GUARDIAN, EM_119_CONFIRMED]]]
+  final: CALLING_119
+
+- id: E005
+  desc: 119 확인 무응답 → 보호자에게 119 연결 요청
+  start: {t: 0, severe: true}
+  start_expected: [[SHOW_119, EM_SEVERE_SYMPTOM]]
+  steps:
+    - [29, tick, null, []]
+    - [30, tick, null, [[GUARDIAN_CALL_119, EM_119_NO_CONFIRM]]]
+  final: GUARDIAN_119
+
+- id: E006
+  desc: 괜찮으세요 단계에서 심한 증상 보고 → 119로 올림, 타이머 새로 시작
+  start: {t: 0, severe: false}
+  start_expected: [[REST_GUIDANCE, null], [ASK_OK, null]]
+  steps:
+    - [20, report_severe, null, [[SHOW_119, EM_SEVERE_SYMPTOM]]]
+    - [49, tick, null, []]
+    - [50, tick, null, [[GUARDIAN_CALL_119, EM_119_NO_CONFIRM]]]
+  final: GUARDIAN_119
+
+- id: E007
+  desc: 끝난 흐름에는 더 반응하지 않음
+  start: {t: 0, severe: false}
+  start_expected: [[REST_GUIDANCE, null], [ASK_OK, null]]
+  steps:
+    - [10, answer, false, [[NOTIFY_GUARDIAN, EM_USER_NOT_OK]]]
+    - [20, answer, true, []]
+    - [100, tick, null, []]
+  final: GUARDIAN_ALERTED
+
+- id: E008
+  desc: 괜찮으세요 단계에서 119 확인 이벤트는 무시
+  start: {t: 0, severe: false}
+  start_expected: [[REST_GUIDANCE, null], [ASK_OK, null]]
+  steps:
+    - [5, confirm_119, null, []]
+    - [10, answer, true, [[REST_GUIDANCE, EM_USER_OK]]]
+  final: RESTING_OK
+
+- id: E009
+  desc: 시간 초과 뒤 늦은 "괜찮아요"는 보호자 알림을 되돌리지 않음
+  start: {t: 0, severe: false}
+  start_expected: [[REST_GUIDANCE, null], [ASK_OK, null]]
+  steps:
+    - [60, tick, null, [[NOTIFY_GUARDIAN, EM_NO_RESPONSE]]]
+    - [65, answer, true, []]
+  final: GUARDIAN_ALERTED
+
+- id: E010
+  desc: 괜찮다고 답한 뒤의 심한 증상은 새 응급 흐름으로(이 흐름은 끝)
+  start: {t: 0, severe: false}
+  start_expected: [[REST_GUIDANCE, null], [ASK_OK, null]]
+  steps:
+    - [10, answer, true, [[REST_GUIDANCE, EM_USER_OK]]]
+    - [20, report_severe, null, []]
+  final: RESTING_OK
+
+- id: E011
+  desc: 119 화면에서 괜찮아요 버튼 이벤트는 무시(발신 확인만 유효)
+  start: {t: 0, severe: true}
+  start_expected: [[SHOW_119, EM_SEVERE_SYMPTOM]]
+  steps:
+    - [3, answer, true, []]
+    - [8, confirm_119, null, [[DIAL_119, EM_119_CONFIRMED], [NOTIFY_GUARDIAN, EM_119_CONFIRMED]]]
+  final: CALLING_119
+
+- id: E012
+  desc: 119 발신 후 시간이 지나도 추가 행동 없음
+  start: {t: 0, severe: true}
+  start_expected: [[SHOW_119, EM_SEVERE_SYMPTOM]]
+  steps:
+    - [5, confirm_119, null, [[DIAL_119, EM_119_CONFIRMED], [NOTIFY_GUARDIAN, EM_119_CONFIRMED]]]
+    - [100, tick, null, []]
+  final: CALLING_119

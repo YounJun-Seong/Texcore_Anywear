@@ -1,0 +1,226 @@
+﻿id,group,age,sbp,dbp,hr,bp_source,hr_source,symptoms,conditions,gate_conditions,parq_risk,clearance,device,dr_sbp_max,dr_dbp_max,dr_hr_max,dr_hr_ceiling,expected,expected_codes,note
+P001,sbp_boundary,72,60,60,70,manual,manual,,,,,,,,,,,REMEASURE,,수축기 60
+P002,sbp_boundary,72,69,60,70,manual,manual,,,,,,,,,,,REMEASURE,,수축기 69
+P003,sbp_boundary,72,70,60,70,manual,manual,,,,,,,,,,,RED,,수축기 70
+P004,sbp_boundary,72,75,60,70,manual,manual,,,,,,,,,,,RED,,수축기 75
+P005,sbp_boundary,72,89,60,70,manual,manual,,,,,,,,,,,RED,,수축기 89
+P006,sbp_boundary,72,89.5,60,70,manual,manual,,,,,,,,,,,RED,,수축기 89.5
+P007,sbp_boundary,72,90,60,70,manual,manual,,,,,,,,,,,GREEN,,수축기 90
+P008,sbp_boundary,72,91,60,70,manual,manual,,,,,,,,,,,GREEN,,수축기 91
+P009,sbp_boundary,72,120,60,70,manual,manual,,,,,,,,,,,GREEN,,수축기 120
+P010,sbp_boundary,72,140,60,70,manual,manual,,,,,,,,,,,GREEN,,수축기 140
+P011,sbp_boundary,72,158,60,70,manual,manual,,,,,,,,,,,GREEN,,수축기 158
+P012,sbp_boundary,72,159,60,70,manual,manual,,,,,,,,,,,GREEN,,수축기 159
+P013,sbp_boundary,72,159.5,60,70,manual,manual,,,,,,,,,,,GREEN,,수축기 159.5
+P014,sbp_boundary,72,160,60,70,manual,manual,,,,,,,,,,,YELLOW,,수축기 160
+P015,sbp_boundary,72,161,60,70,manual,manual,,,,,,,,,,,YELLOW,,수축기 161
+P016,sbp_boundary,72,170,60,70,manual,manual,,,,,,,,,,,YELLOW,,수축기 170
+P017,sbp_boundary,72,178,60,70,manual,manual,,,,,,,,,,,YELLOW,,수축기 178
+P018,sbp_boundary,72,179,60,70,manual,manual,,,,,,,,,,,YELLOW,,수축기 179
+P019,sbp_boundary,72,179.5,60,70,manual,manual,,,,,,,,,,,YELLOW,,수축기 179.5
+P020,sbp_boundary,72,180,60,70,manual,manual,,,,,,,,,,,RED,,수축기 180
+P021,sbp_boundary,72,181,60,70,manual,manual,,,,,,,,,,,RED,,수축기 181
+P022,sbp_boundary,72,200,60,70,manual,manual,,,,,,,,,,,RED,,수축기 200
+P023,sbp_boundary,72,220,60,70,manual,manual,,,,,,,,,,,RED,,수축기 220
+P024,sbp_boundary,72,259,60,70,manual,manual,,,,,,,,,,,RED,,수축기 259
+P025,sbp_boundary,72,260,60,70,manual,manual,,,,,,,,,,,RED,,수축기 260
+P026,sbp_boundary,72,261,60,70,manual,manual,,,,,,,,,,,REMEASURE,,수축기 261
+P027,sbp_boundary,72,300,60,70,manual,manual,,,,,,,,,,,REMEASURE,,수축기 300
+P028,dbp_boundary,72,130,25,70,manual,manual,,,,,,,,,,,REMEASURE,,이완기 25
+P029,dbp_boundary,72,130,29,70,manual,manual,,,,,,,,,,,REMEASURE,,이완기 29
+P030,dbp_boundary,72,130,30,70,manual,manual,,,,,,,,,,,RED,,이완기 30
+P031,dbp_boundary,72,130,40,70,manual,manual,,,,,,,,,,,RED,,이완기 40
+P032,dbp_boundary,72,130,49,70,manual,manual,,,,,,,,,,,RED,,이완기 49
+P033,dbp_boundary,72,130,49.5,70,manual,manual,,,,,,,,,,,RED,,이완기 49.5
+P034,dbp_boundary,72,130,50,70,manual,manual,,,,,,,,,,,GREEN,,이완기 50
+P035,dbp_boundary,72,130,51,70,manual,manual,,,,,,,,,,,GREEN,,이완기 51
+P036,dbp_boundary,72,130,80,70,manual,manual,,,,,,,,,,,GREEN,,이완기 80
+P037,dbp_boundary,72,130,99,70,manual,manual,,,,,,,,,,,GREEN,,이완기 99
+P038,dbp_boundary,72,130,99.5,70,manual,manual,,,,,,,,,,,GREEN,,이완기 99.5
+P039,dbp_boundary,72,130,100,70,manual,manual,,,,,,,,,,,YELLOW,,이완기 100
+P040,dbp_boundary,72,130,105,70,manual,manual,,,,,,,,,,,YELLOW,,이완기 105
+P041,dbp_boundary,72,130,109,70,manual,manual,,,,,,,,,,,YELLOW,,이완기 109
+P042,dbp_boundary,72,130,109.5,70,manual,manual,,,,,,,,,,,YELLOW,,이완기 109.5
+P043,dbp_boundary,72,130,110,70,manual,manual,,,,,,,,,,,RED,,이완기 110
+P044,dbp_boundary,72,130,111,70,manual,manual,,,,,,,,,,,RED,,이완기 111
+P045,dbp_boundary,72,130,120,70,manual,manual,,,,,,,,,,,RED,,이완기 120
+P046,dbp_boundary,72,130,129,70,manual,manual,,,,,,,,,,,RED,,이완기 129
+P047,dbp_boundary,72,130,151,70,manual,manual,,,,,,,,,,,REMEASURE,,이완기 151
+P048,dbp_boundary,72,130,170,70,manual,manual,,,,,,,,,,,REMEASURE,,이완기 170
+P049,hr_boundary,72,130,80,20,manual,manual,,,,,,,,,,,REMEASURE,,안정 시 심박 20
+P050,hr_boundary,72,130,80,29,manual,manual,,,,,,,,,,,REMEASURE,,안정 시 심박 29
+P051,hr_boundary,72,130,80,30,manual,manual,,,,,,,,,,,RED,,안정 시 심박 30
+P052,hr_boundary,72,130,80,40,manual,manual,,,,,,,,,,,RED,,안정 시 심박 40
+P053,hr_boundary,72,130,80,44,manual,manual,,,,,,,,,,,RED,,안정 시 심박 44
+P054,hr_boundary,72,130,80,44.5,manual,manual,,,,,,,,,,,RED,,안정 시 심박 44.5
+P055,hr_boundary,72,130,80,45,manual,manual,,,,,,,,,,,YELLOW,,안정 시 심박 45
+P056,hr_boundary,72,130,80,47,manual,manual,,,,,,,,,,,YELLOW,,안정 시 심박 47
+P057,hr_boundary,72,130,80,49,manual,manual,,,,,,,,,,,YELLOW,,안정 시 심박 49
+P058,hr_boundary,72,130,80,49.5,manual,manual,,,,,,,,,,,YELLOW,,안정 시 심박 49.5
+P059,hr_boundary,72,130,80,50,manual,manual,,,,,,,,,,,GREEN,,안정 시 심박 50
+P060,hr_boundary,72,130,80,51,manual,manual,,,,,,,,,,,GREEN,,안정 시 심박 51
+P061,hr_boundary,72,130,80,75,manual,manual,,,,,,,,,,,GREEN,,안정 시 심박 75
+P062,hr_boundary,72,130,80,99,manual,manual,,,,,,,,,,,GREEN,,안정 시 심박 99
+P063,hr_boundary,72,130,80,99.5,manual,manual,,,,,,,,,,,GREEN,,안정 시 심박 99.5
+P064,hr_boundary,72,130,80,100,manual,manual,,,,,,,,,,,YELLOW,,안정 시 심박 100
+P065,hr_boundary,72,130,80,110,manual,manual,,,,,,,,,,,YELLOW,,안정 시 심박 110
+P066,hr_boundary,72,130,80,119,manual,manual,,,,,,,,,,,YELLOW,,안정 시 심박 119
+P067,hr_boundary,72,130,80,119.5,manual,manual,,,,,,,,,,,YELLOW,,안정 시 심박 119.5
+P068,hr_boundary,72,130,80,120,manual,manual,,,,,,,,,,,RED,,안정 시 심박 120
+P069,hr_boundary,72,130,80,121,manual,manual,,,,,,,,,,,RED,,안정 시 심박 121
+P070,hr_boundary,72,130,80,150,manual,manual,,,,,,,,,,,RED,,안정 시 심박 150
+P071,hr_boundary,72,130,80,220,manual,manual,,,,,,,,,,,RED,,안정 시 심박 220
+P072,hr_boundary,72,130,80,221,manual,manual,,,,,,,,,,,REMEASURE,,안정 시 심박 221
+P073,hr_boundary,72,130,80,250,manual,manual,,,,,,,,,,,REMEASURE,,안정 시 심박 250
+P074,bp_inverted,72,95,95,70,manual,manual,,,,,,,,,,,REMEASURE,,95/95
+P075,bp_inverted,72,100,99,70,manual,manual,,,,,,,,,,,GREEN,,100/99
+P076,bp_inverted,72,92,98,70,manual,manual,,,,,,,,,,,REMEASURE,,92/98
+P077,bp_inverted,72,100,100,70,manual,manual,,,,,,,,,,,REMEASURE,,100/100
+P078,symptom,72,130,80,70,manual,manual,chest_pain,,,,,,,,,,EMERGENCY,PRE_EMERGENCY_SYMPTOM,급성 위급 증상 chest_pain → 119
+P079,symptom,72,130,80,70,manual,manual,fainted,,,,,,,,,,EMERGENCY,PRE_EMERGENCY_SYMPTOM,급성 위급 증상 fainted → 119
+P080,symptom,72,130,80,70,manual,manual,reduced_consciousness,,,,,,,,,,EMERGENCY,PRE_EMERGENCY_SYMPTOM,급성 위급 증상 reduced_consciousness → 119
+P081,symptom,72,130,80,70,manual,manual,one_side_weakness,,,,,,,,,,EMERGENCY,PRE_EMERGENCY_SYMPTOM,급성 위급 증상 one_side_weakness → 119
+P082,symptom,72,130,80,70,manual,manual,slurred_speech,,,,,,,,,,EMERGENCY,PRE_EMERGENCY_SYMPTOM,급성 위급 증상 slurred_speech → 119
+P083,symptom,72,130,80,70,manual,manual,shortness_of_breath,,,,,,,,,,RED,PRE_RED_SYMPTOM,빨강 증상 shortness_of_breath
+P084,symptom,72,130,80,70,manual,manual,dizziness,,,,,,,,,,RED,PRE_RED_SYMPTOM,빨강 증상 dizziness
+P085,symptom,72,130,80,70,manual,manual,severe_unusual_fatigue,,,,,,,,,,RED,PRE_RED_SYMPTOM,빨강 증상 severe_unusual_fatigue
+P086,symptom,72,130,80,70,manual,manual,mild_fatigue,,,,,,,,,,YELLOW,PRE_YELLOW_SYMPTOM,가벼운 피로
+P087,symptom,72,130,80,70,manual,manual,mild_fatigue|dizziness,,,,,,,,,,RED,,가벼운 피로 + 어지러움
+P088,symptom,72,130,80,70,manual,manual,chest_pain|mild_fatigue,,,,,,,,,,EMERGENCY,,흉통 + 가벼운 피로
+P089,symptom,72,190,80,70,manual,manual,slurred_speech,,,,,,,,,,EMERGENCY,,위급 증상은 빨강 수치보다 우선
+P090,symptom,72,300,80,70,manual,manual,one_side_weakness,,,,,,,,,,EMERGENCY,,위급 증상은 비현실 수치보다 우선
+P091,symptom,72,130,80,70,manual,manual,chest_pain,,unstable_angina,,,,,,,,EMERGENCY,,위급 증상은 하드 게이트보다 우선
+P092,symptom,72,165,80,70,manual,manual,mild_fatigue,,,,,,,,,,YELLOW,,가벼운 피로 + 노랑 혈압
+P093,symptom,72,130,80,105,manual,manual,shortness_of_breath,,,,,,,,,,RED,,숨참 + 노랑 심박
+P094,condition,72,130,80,70,manual,manual,,fever,,,,,,,,,RED,PRE_RED_CONDITION,빨강 컨디션 fever
+P095,condition,72,130,80,70,manual,manual,,acute_illness,,,,,,,,,RED,PRE_RED_CONDITION,빨강 컨디션 acute_illness
+P096,condition,72,130,80,70,manual,manual,,rested_3plus_days,,,,,,,,,YELLOW,PRE_YELLOW_CONDITION,노랑 컨디션 rested_3plus_days
+P097,condition,72,130,80,70,manual,manual,,poor_sleep,,,,,,,,,YELLOW,PRE_YELLOW_CONDITION,노랑 컨디션 poor_sleep
+P098,condition,72,130,80,70,manual,manual,,missed_medication,,,,,,,,,YELLOW,PRE_YELLOW_CONDITION,노랑 컨디션 missed_medication
+P099,condition,72,130,80,70,manual,manual,,poor_sleep|missed_medication,,,,,,,,,YELLOW,,노랑 컨디션 2개
+P100,condition,72,130,80,70,manual,manual,,poor_sleep|fever,,,,,,,,,RED,,노랑 + 빨강 컨디션
+P101,condition,72,130,80,70,manual,manual,mild_fatigue,fever,,,,,,,,,RED,,열 + 가벼운 피로
+P102,worst_wins,72,130,80,70,manual,manual,,,,,,,,,,,GREEN,,"130/80, 심박 70"
+P103,worst_wins,72,130,80,110,manual,manual,,,,,,,,,,,YELLOW,,"130/80, 심박 110"
+P104,worst_wins,72,130,80,125,manual,manual,,,,,,,,,,,RED,,"130/80, 심박 125"
+P105,worst_wins,72,130,80,225,manual,manual,,,,,,,,,,,REMEASURE,,"130/80, 심박 225"
+P106,worst_wins,72,130,105,70,manual,manual,,,,,,,,,,,YELLOW,,"130/105, 심박 70"
+P107,worst_wins,72,130,105,110,manual,manual,,,,,,,,,,,YELLOW,,"130/105, 심박 110"
+P108,worst_wins,72,130,105,125,manual,manual,,,,,,,,,,,RED,,"130/105, 심박 125"
+P109,worst_wins,72,130,105,225,manual,manual,,,,,,,,,,,REMEASURE,,"130/105, 심박 225"
+P110,worst_wins,72,130,115,70,manual,manual,,,,,,,,,,,RED,,"130/115, 심박 70"
+P111,worst_wins,72,130,115,110,manual,manual,,,,,,,,,,,RED,,"130/115, 심박 110"
+P112,worst_wins,72,130,115,125,manual,manual,,,,,,,,,,,RED,,"130/115, 심박 125"
+P113,worst_wins,72,130,115,225,manual,manual,,,,,,,,,,,RED,,"130/115, 심박 225"
+P114,worst_wins,72,130,155,70,manual,manual,,,,,,,,,,,REMEASURE,,"130/155, 심박 70"
+P115,worst_wins,72,130,155,110,manual,manual,,,,,,,,,,,REMEASURE,,"130/155, 심박 110"
+P116,worst_wins,72,130,155,125,manual,manual,,,,,,,,,,,RED,,"130/155, 심박 125"
+P117,worst_wins,72,130,155,225,manual,manual,,,,,,,,,,,REMEASURE,,"130/155, 심박 225"
+P118,worst_wins,72,170,80,70,manual,manual,,,,,,,,,,,YELLOW,,"170/80, 심박 70"
+P119,worst_wins,72,170,80,110,manual,manual,,,,,,,,,,,YELLOW,,"170/80, 심박 110"
+P120,worst_wins,72,170,80,125,manual,manual,,,,,,,,,,,RED,,"170/80, 심박 125"
+P121,worst_wins,72,170,80,225,manual,manual,,,,,,,,,,,REMEASURE,,"170/80, 심박 225"
+P122,worst_wins,72,170,105,70,manual,manual,,,,,,,,,,,YELLOW,,"170/105, 심박 70"
+P123,worst_wins,72,170,105,110,manual,manual,,,,,,,,,,,YELLOW,,"170/105, 심박 110"
+P124,worst_wins,72,170,105,125,manual,manual,,,,,,,,,,,RED,,"170/105, 심박 125"
+P125,worst_wins,72,170,105,225,manual,manual,,,,,,,,,,,REMEASURE,,"170/105, 심박 225"
+P126,worst_wins,72,170,115,70,manual,manual,,,,,,,,,,,RED,,"170/115, 심박 70"
+P127,worst_wins,72,170,115,110,manual,manual,,,,,,,,,,,RED,,"170/115, 심박 110"
+P128,worst_wins,72,170,115,125,manual,manual,,,,,,,,,,,RED,,"170/115, 심박 125"
+P129,worst_wins,72,170,115,225,manual,manual,,,,,,,,,,,RED,,"170/115, 심박 225"
+P130,worst_wins,72,170,155,70,manual,manual,,,,,,,,,,,REMEASURE,,"170/155, 심박 70"
+P131,worst_wins,72,170,155,110,manual,manual,,,,,,,,,,,REMEASURE,,"170/155, 심박 110"
+P132,worst_wins,72,170,155,125,manual,manual,,,,,,,,,,,RED,,"170/155, 심박 125"
+P133,worst_wins,72,170,155,225,manual,manual,,,,,,,,,,,REMEASURE,,"170/155, 심박 225"
+P134,worst_wins,72,185,80,70,manual,manual,,,,,,,,,,,RED,,"185/80, 심박 70"
+P135,worst_wins,72,185,80,110,manual,manual,,,,,,,,,,,RED,,"185/80, 심박 110"
+P136,worst_wins,72,185,80,125,manual,manual,,,,,,,,,,,RED,,"185/80, 심박 125"
+P137,worst_wins,72,185,80,225,manual,manual,,,,,,,,,,,RED,,"185/80, 심박 225"
+P138,worst_wins,72,185,105,70,manual,manual,,,,,,,,,,,RED,,"185/105, 심박 70"
+P139,worst_wins,72,185,105,110,manual,manual,,,,,,,,,,,RED,,"185/105, 심박 110"
+P140,worst_wins,72,185,105,125,manual,manual,,,,,,,,,,,RED,,"185/105, 심박 125"
+P141,worst_wins,72,185,105,225,manual,manual,,,,,,,,,,,RED,,"185/105, 심박 225"
+P142,worst_wins,72,185,115,70,manual,manual,,,,,,,,,,,RED,,"185/115, 심박 70"
+P143,worst_wins,72,185,115,110,manual,manual,,,,,,,,,,,RED,,"185/115, 심박 110"
+P144,worst_wins,72,185,115,125,manual,manual,,,,,,,,,,,RED,,"185/115, 심박 125"
+P145,worst_wins,72,185,115,225,manual,manual,,,,,,,,,,,RED,,"185/115, 심박 225"
+P146,worst_wins,72,185,155,70,manual,manual,,,,,,,,,,,RED,,"185/155, 심박 70"
+P147,worst_wins,72,185,155,110,manual,manual,,,,,,,,,,,RED,,"185/155, 심박 110"
+P148,worst_wins,72,185,155,125,manual,manual,,,,,,,,,,,RED,,"185/155, 심박 125"
+P149,worst_wins,72,185,155,225,manual,manual,,,,,,,,,,,RED,,"185/155, 심박 225"
+P150,worst_wins,72,85,80,70,manual,manual,,,,,,,,,,,RED,,"85/80, 심박 70"
+P151,worst_wins,72,85,80,110,manual,manual,,,,,,,,,,,RED,,"85/80, 심박 110"
+P152,worst_wins,72,85,80,125,manual,manual,,,,,,,,,,,RED,,"85/80, 심박 125"
+P153,worst_wins,72,85,80,225,manual,manual,,,,,,,,,,,RED,,"85/80, 심박 225"
+P154,worst_wins,72,85,105,70,manual,manual,,,,,,,,,,,RED,,"85/105, 심박 70"
+P155,worst_wins,72,85,105,110,manual,manual,,,,,,,,,,,RED,,"85/105, 심박 110"
+P156,worst_wins,72,85,105,125,manual,manual,,,,,,,,,,,RED,,"85/105, 심박 125"
+P157,worst_wins,72,85,105,225,manual,manual,,,,,,,,,,,RED,,"85/105, 심박 225"
+P158,worst_wins,72,85,115,70,manual,manual,,,,,,,,,,,RED,,"85/115, 심박 70"
+P159,worst_wins,72,85,115,110,manual,manual,,,,,,,,,,,RED,,"85/115, 심박 110"
+P160,worst_wins,72,85,115,125,manual,manual,,,,,,,,,,,RED,,"85/115, 심박 125"
+P161,worst_wins,72,85,115,225,manual,manual,,,,,,,,,,,RED,,"85/115, 심박 225"
+P162,worst_wins,72,85,155,70,manual,manual,,,,,,,,,,,RED,,"85/155, 심박 70"
+P163,worst_wins,72,85,155,110,manual,manual,,,,,,,,,,,RED,,"85/155, 심박 110"
+P164,worst_wins,72,85,155,125,manual,manual,,,,,,,,,,,RED,,"85/155, 심박 125"
+P165,worst_wins,72,85,155,225,manual,manual,,,,,,,,,,,RED,,"85/155, 심박 225"
+P166,worst_wins,72,265,80,70,manual,manual,,,,,,,,,,,REMEASURE,,"265/80, 심박 70"
+P167,worst_wins,72,265,80,110,manual,manual,,,,,,,,,,,REMEASURE,,"265/80, 심박 110"
+P168,worst_wins,72,265,80,125,manual,manual,,,,,,,,,,,RED,,"265/80, 심박 125"
+P169,worst_wins,72,265,80,225,manual,manual,,,,,,,,,,,REMEASURE,,"265/80, 심박 225"
+P170,worst_wins,72,265,105,70,manual,manual,,,,,,,,,,,REMEASURE,,"265/105, 심박 70"
+P171,worst_wins,72,265,105,110,manual,manual,,,,,,,,,,,REMEASURE,,"265/105, 심박 110"
+P172,worst_wins,72,265,105,125,manual,manual,,,,,,,,,,,RED,,"265/105, 심박 125"
+P173,worst_wins,72,265,105,225,manual,manual,,,,,,,,,,,REMEASURE,,"265/105, 심박 225"
+P174,worst_wins,72,265,115,70,manual,manual,,,,,,,,,,,RED,,"265/115, 심박 70"
+P175,worst_wins,72,265,115,110,manual,manual,,,,,,,,,,,RED,,"265/115, 심박 110"
+P176,worst_wins,72,265,115,125,manual,manual,,,,,,,,,,,RED,,"265/115, 심박 125"
+P177,worst_wins,72,265,115,225,manual,manual,,,,,,,,,,,RED,,"265/115, 심박 225"
+P178,worst_wins,72,265,155,70,manual,manual,,,,,,,,,,,REMEASURE,,"265/155, 심박 70"
+P179,worst_wins,72,265,155,110,manual,manual,,,,,,,,,,,REMEASURE,,"265/155, 심박 110"
+P180,worst_wins,72,265,155,125,manual,manual,,,,,,,,,,,RED,,"265/155, 심박 125"
+P181,worst_wins,72,265,155,225,manual,manual,,,,,,,,,,,REMEASURE,,"265/155, 심박 225"
+P182,source,72,130,80,70,watch,manual,,,,,,,,,,,REMEASURE,PRE_BP_SOURCE_NOT_ALLOWED,워치 혈압은 판정 금지
+P183,source,72,190,80,70,watch,manual,,,,,,,,,,,REMEASURE,PRE_BP_SOURCE_NOT_ALLOWED,워치 혈압이 높아도 판정 대신 재측정
+P184,source,72,130,80,125,watch,manual,,,,,,,,,,,RED,,워치 혈압 + 빨강 심박(상완형 맥박)
+P185,source,72,130,80,70,watch,manual,dizziness,,,,,,,,,,RED,,워치 혈압 + 빨강 증상
+P186,source,72,130,80,70,ble_upper_arm,ble_upper_arm,,,,,,,,,,,GREEN,,BLE 상완형 혈압계
+P187,source,72,130,80,70,manual,chest_strap,,,,,,,,,,,GREEN,,가슴 스트랩 심박
+P188,source,72,130,80,70,manual,watch,,,,,,,,,,,REMEASURE,PRE_HR_SOURCE_LOW_GRADE,워치 심박이 정상이어도 안전 근거 아님
+P189,source,72,130,80,110,manual,watch,,,,,,,,,,,YELLOW,,워치 심박 노랑은 반영
+P190,source,72,130,80,125,manual,watch,,,,,,,,,,,RED,,워치 심박 빨강은 반영
+P191,source,72,,80,70,manual,manual,,,,,,,,,,,REMEASURE,PRE_MISSING_VALUE,수축기 누락
+P192,source,72,130,80,,manual,manual,,,,,,,,,,,REMEASURE,PRE_MISSING_VALUE,심박 누락
+P193,source,72,,80,70,manual,manual,shortness_of_breath,,,,,,,,,,RED,,누락 + 빨강 증상
+P194,gate,72,130,80,70,manual,manual,,,unstable_angina,,,,,,,,BLOCKED,GATE_CONDITION_NEEDS_CLEARANCE,"unstable_angina, 확인서 없음"
+P195,gate,72,130,80,70,manual,manual,,,uncontrolled_arrhythmia,,,,,,,,BLOCKED,GATE_CONDITION_NEEDS_CLEARANCE,"uncontrolled_arrhythmia, 확인서 없음"
+P196,gate,72,130,80,70,manual,manual,,,worsening_heart_failure,,,,,,,,BLOCKED,GATE_CONDITION_NEEDS_CLEARANCE,"worsening_heart_failure, 확인서 없음"
+P197,gate,72,130,80,70,manual,manual,,,recent_myocardial_infarction,,,,,,,,BLOCKED,GATE_CONDITION_NEEDS_CLEARANCE,"recent_myocardial_infarction, 확인서 없음"
+P198,gate,72,130,80,70,manual,manual,,,recent_cardiac_surgery,,,,,,,,BLOCKED,GATE_CONDITION_NEEDS_CLEARANCE,"recent_cardiac_surgery, 확인서 없음"
+P199,gate,72,130,80,70,manual,manual,,,recent_stroke,,,,,,,,BLOCKED,GATE_CONDITION_NEEDS_CLEARANCE,"recent_stroke, 확인서 없음"
+P200,gate,72,130,80,70,manual,manual,,,severe_aortic_stenosis,,,,,,,,BLOCKED,GATE_CONDITION_NEEDS_CLEARANCE,"severe_aortic_stenosis, 확인서 없음"
+P201,gate,72,130,80,70,manual,manual,,,syncope_history,,,,,,,,BLOCKED,GATE_CONDITION_NEEDS_CLEARANCE,"syncope_history, 확인서 없음"
+P202,gate,72,130,80,70,manual,manual,,,unstable_angina,,1,,,,,,GREEN,,"unstable_angina, 의사 확인서 있음"
+P203,gate,72,130,80,70,manual,manual,,,uncontrolled_arrhythmia,,1,,,,,,GREEN,,"uncontrolled_arrhythmia, 의사 확인서 있음"
+P204,gate,72,130,80,70,manual,manual,,,worsening_heart_failure,,1,,,,,,GREEN,,"worsening_heart_failure, 의사 확인서 있음"
+P205,gate,72,130,80,70,manual,manual,,,recent_myocardial_infarction,,1,,,,,,GREEN,,"recent_myocardial_infarction, 의사 확인서 있음"
+P206,gate,72,130,80,70,manual,manual,,,,1,,,,,,,BLOCKED,GATE_PARQ_RISK,문진 위험 응답
+P207,gate,72,130,80,70,manual,manual,,,,1,1,,,,,,GREEN,,문진 위험 + 확인서
+P208,gate,72,130,80,70,manual,manual,,,,,,pacemaker,,,,,BLOCKED,GATE_DEVICE_NEEDS_HR_CEILING,"심박조율기, 심박 상한 없음"
+P209,gate,72,130,80,70,manual,manual,,,,,1,icd,,,,,BLOCKED,GATE_DEVICE_NEEDS_HR_CEILING,"ICD, 확인서 있어도 상한 없으면 잠금"
+P210,gate,72,130,80,70,manual,manual,,,,,,pacemaker,,,,110,GREEN,,심박조율기 + 의사 상한
+P211,gate,72,190,80,70,manual,manual,,,recent_stroke,,,,,,,,BLOCKED,,게이트가 빨강 수치보다 우선
+P212,doctor_limit,72,149,80,70,manual,manual,,,,,,,150,,,,GREEN,,"수축기 한도 150, 149"
+P213,doctor_limit,72,150,80,70,manual,manual,,,,,,,150,,,,RED,PRE_OVER_DOCTOR_LIMIT,"수축기 한도 150, 150"
+P214,doctor_limit,72,155,80,70,manual,manual,,,,,,,150,,,,RED,,"수축기 한도 150, 155"
+P215,doctor_limit,72,165,80,70,manual,manual,,,,,,,150,,,,RED,,"수축기 한도 150, 165(원래 노랑)"
+P216,doctor_limit,72,185,80,70,manual,manual,,,,,,,200,,,,RED,DOCTOR_LIMIT_LOOSER_IGNORED,"느슨한 한도 200은 무시, 185는 빨강"
+P217,doctor_limit,72,175,80,70,manual,manual,,,,,,,200,,,,YELLOW,DOCTOR_LIMIT_LOOSER_IGNORED,"느슨한 한도 200은 무시, 175는 노랑"
+P218,doctor_limit,72,179,80,70,manual,manual,,,,,,,180,,,,YELLOW,,"기본과 같은 한도 180, 179"
+P219,doctor_limit,72,180,80,70,manual,manual,,,,,,,180,,,,RED,,"기본과 같은 한도 180, 180"
+P220,doctor_limit,72,130,89,70,manual,manual,,,,,,,,90,,,GREEN,,"이완기 한도 90, 89"
+P221,doctor_limit,72,130,90,70,manual,manual,,,,,,,,90,,,RED,,"이완기 한도 90, 90"
+P222,doctor_limit,72,130,80,89,manual,manual,,,,,,,,,90,,GREEN,,"심박 한도 90, 89"
+P223,doctor_limit,72,130,80,90,manual,manual,,,,,,,,,90,,RED,,"심박 한도 90, 90"
+P224,doctor_limit,72,130,80,125,manual,manual,,,,,,,,,130,,RED,,"느슨한 심박 한도 130은 무시, 125는 빨강"
+P225,doctor_limit,72,265,80,70,manual,manual,,,,,,,150,,,,REMEASURE,,한도가 있어도 비현실 값은 재측정

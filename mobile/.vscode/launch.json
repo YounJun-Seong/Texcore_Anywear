@@ -1,0 +1,19 @@
+{
+  // VS Code에서 F5로 앱 실행 (Flutter 확장 필요). 서버·워치 브리지는 먼저 켜 두세요.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "운동친구 (브라우저, VS Code 안에서 보기)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "web-server",
+      "args": ["--web-port", "8090", "--dart-define=API_BASE_URL=http://localhost:8000", "--dart-define=WATCH_BRIDGE_URL=ws://localhost:8765", "--dart-define=ALLOW_DRAFT_RULES=true"]
+    },
+    {
+      "name": "운동친구 (안드로이드 에뮬레이터)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--dart-define=ALLOW_DRAFT_RULES=true"]
+    }
+  ]
+}

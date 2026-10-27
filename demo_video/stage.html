@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>운동친구 실제 앱 시연</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800&family=Sora:wght@600;700&display=swap">
+<style>
+[hidden] { display: none !important; }
+:root { --bg: #0b1017; --panel: #141b25; --ink: #eef2f7; --ink-2: #b4bfcc; --ink-3: #8592a3; --line: #263142; --care: #34c48b; --kin: #8f8bff; --red: #ff6b5e; --yellow: #f5b800; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Gothic A1", sans-serif; height: 100vh; overflow: hidden; }
+.stage { display: grid; grid-template-columns: 470px 1fr; height: 100vh; padding: 36px 56px 36px 40px; gap: 48px; }
+.device { background: #000; border-radius: 52px; padding: 12px; box-shadow: 0 0 0 2px #2a3240, 0 40px 80px -30px rgba(0,0,0,.8); width: 418px; height: 846px; position: relative; justify-self: center; align-self: center; }
+.device::before { content: ""; position: absolute; top: 22px; left: 50%; transform: translateX(-50%); width: 100px; height: 28px; background: #000; border-radius: 20px; z-index: 2; }
+iframe { width: 394px; height: 822px; border: 0; border-radius: 41px; background: #f2f4f7; display: block; }
+.side { display: flex; flex-direction: column; gap: 22px; padding-top: 8px; min-width: 0; }
+.eyebrow { font-size: 15px; font-weight: 700; color: var(--care); letter-spacing: .04em; }
+.step { display: flex; gap: 16px; align-items: baseline; }
+.step .n { font-family: Sora, sans-serif; font-size: 22px; font-weight: 700; color: var(--ink-3); min-width: 36px; }
+.step h1 { margin: 0; font-size: 40px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
+.desc { font-size: 21px; color: var(--ink-2); line-height: 1.6; margin: -6px 0 0 52px; max-width: 34em; min-height: 3.2em; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: auto; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 18px 20px; display: grid; gap: 8px; min-height: 210px; align-content: start; }
+.card h2 { margin: 0; font-size: 14px; color: var(--ink-3); font-weight: 700; letter-spacing: .03em; }
+.bpm { font-family: Sora, sans-serif; font-size: 64px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+.bpm small { font-size: 18px; color: var(--ink-3); font-family: "Gothic A1"; font-weight: 700; margin-left: 6px; letter-spacing: 0; }
+.state { font-size: 15px; font-weight: 700; color: var(--care); }
+.state.off { color: var(--red); }
+canvas { width: 100%; height: 70px; }
+.feed { display: grid; gap: 8px; font-size: 16px; }
+.msg { background: #1b2430; border-radius: 12px; padding: 10px 12px; line-height: 1.4; animation: in .4s ease-out; }
+.msg b { color: var(--kin); }
+.msg.urgent b { color: var(--red); }
+.empty { color: var(--ink-3); font-size: 15px; }
+.foot { font-size: 14px; color: var(--ink-3); }
+.fast { position: fixed; top: 28px; right: 40px; background: var(--yellow); color: #241a00; font-weight: 800; font-size: 18px; padding: 8px 16px; border-radius: 999px; }
+@keyframes in { from { opacity: 0; transform: translateY(-6px) } to { opacity: 1; transform: none } }
+</style>
+</head>
+<body>
+<div class="fast" id="fast" hidden>▶▶ 기다리는 구간 5배 빠르게</div>
+<div class="stage">
+  <div class="device"><iframe id="app" src="/app/" title="운동친구 앱"></iframe></div>
+  <div class="side">
+    <div class="eyebrow">운동친구 · 실제 앱 시연</div>
+    <div class="step"><span class="n" id="n">00</span><h1 id="title">준비 중</h1></div>
+    <p class="desc" id="desc"></p>
+    <div class="cards">
+      <div class="card">
+        <h2>디즈먼트 워치 → PC 브리지 → 앱 (가상 워치)</h2>
+        <div class="bpm"><span id="bpm">–</span><small>회/분</small></div>
+        <div class="state off" id="wstate">브리지 연결 전</div>
+        <canvas id="spark" width="600" height="140"></canvas>
+      </div>
+      <div class="card">
+        <h2>보호자 휴대폰으로 간 알림 (실제 서버)</h2>
+        <div class="feed" id="feed"><div class="empty">아직 없음</div></div>
+      </div>
+    </div>
+    <div class="foot">판정: 앱 안의 안전 엔진(정답표 352건 통과, 규칙 0.1.0-draft) · 워치 심박은 B 등급(경고용) · 서버·브리지는 실제 실행, 워치만 가상</div>
+  </div>
+</div>
+<script>
+window.setFast = on => { document.getElementById('fast').hidden = !on; };
+// 자막: 녹화 스크립트가 부른다
+window.caption = (n, title, desc) => {
+  document.getElementById('n').textContent = String(n).padStart(2, '0');
+  document.getElementById('title').textContent = title;
+  document.getElementById('desc').textContent = desc || '';
+};
+// 가상 워치 심박(앱과 같은 브리지를 따로 구독)
+const series = []; window.lastBpm = null; window.lastBpmAt = 0;
+function draw() {
+  const c = document.getElementById('spark'), g = c.getContext('2d');
+  g.clearRect(0, 0, c.width, c.height);
+  const ceil = 109, lo = 70, hi = 140, y = v => c.height - (v - lo) / (hi - lo) * c.height;
+  g.strokeStyle = 'rgba(245,184,0,.6)'; g.setLineDash([8, 8]); g.lineWidth = 2;
+  g.beginPath(); g.moveTo(0, y(ceil)); g.lineTo(c.width, y(ceil)); g.stroke(); g.setLineDash([]);
+  g.fillStyle = 'rgba(245,184,0,.9)'; g.font = '22px Gothic A1'; g.fillText('오늘 상한 109', 8, y(ceil) - 8);
+  g.strokeStyle = '#34c48b'; g.lineWidth = 4; g.beginPath();
+  series.forEach((v, i) => { const x = i / 89 * c.width; v == null ? g.moveTo(x, c.height) : (i && series[i - 1] != null ? g.lineTo(x, y(v)) : g.moveTo(x, y(v))); });
+  g.stroke();
+}
+function connect() {
+  const ws = new WebSocket('ws://localhost:8765');
+  const st = document.getElementById('wstate');
+  ws.onmessage = e => {
+    const m = JSON.parse(e.data);
+    if (m.type === 'hr') { window.lastBpm = m.bpm; window.lastBpmAt = Date.now(); document.getElementById('bpm').textContent = m.bpm; st.textContent = '심박 수신 중'; st.className = 'state'; }
+  };
+  ws.onclose = () => { st.textContent = '브리지 꺼짐 · 다시 연결 중'; st.className = 'state off'; setTimeout(connect, 1000); };
+}
+setInterval(() => {
+  const fresh = Date.now() - window.lastBpmAt < 2500;
+  series.push(fresh ? window.lastBpm : null); if (series.length > 90) series.shift();
+  if (!fresh && window.lastBpmAt) { document.getElementById('wstate').textContent = '심박 끊김'; document.getElementById('wstate').className = 'state off'; document.getElementById('bpm').textContent = '–'; }
+  draw();
+}, 1000);
+connect();
+// 실제 서버가 보호자에게 보낸 알림
+let seen = 0;
+setInterval(async () => {
+  try {
+    const out = await (await fetch('/__demo/outbox')).json();
+    const push = out.filter(m => m.channel !== 'call');
+    if (push.length === seen) return;
+    const calls = new Set(out.filter(m => m.channel === 'call').map(m => m.body));
+    seen = push.length;
+    document.getElementById('feed').innerHTML = push.slice(-4).reverse().map(m =>
+      `<div class="msg ${calls.has(m.body) ? 'urgent' : ''}"><b>${calls.has(m.body) ? '전화+알림' : '알림'}</b> · ${m.body}</div>`).join('');
+  } catch (e) {}
+}, 1000);
+</script>
+</body>
+</html>
